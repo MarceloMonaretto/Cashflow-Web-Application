@@ -1,0 +1,44 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.loginTitle {
+    margin: 30px 30px auto;
+    text-transform: uppercase;
+}
+
+#loginErrorMessage{
+    color: red;
+}
+
+#userLabel{
+    margin: 50px 7px auto;
+}
+
+#loginButton{
+    margin-bottom: 10px;
+}
+
+.loginButtonHeader{
+    margin-right: 40px;
+}
