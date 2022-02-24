@@ -15,13 +15,16 @@ namespace CashflowUI.Tests
 {
     public class LoginManagerTests
     {
-        public readonly IHttpContextAccessor Accessor;
+        private readonly IHttpContextAccessor Accessor;
+        private readonly IAccountManager _accManager = new CashFlowUI.Helpers.AccountManager();
+        private readonly ILoginManager _logManager;
 
         public LoginManagerTests()
         {
             var sp = MockServiceProvider();
             Accessor = MockHttpContextAccessor().Object;
             Accessor.HttpContext.RequestServices = sp.Object;
+            _logManager = new LoginManager(Accessor, _accManager);
 
         }
 
@@ -31,7 +34,8 @@ namespace CashflowUI.Tests
 
             var sp = new Mock<IServiceProvider>();
             sp.Setup(s => s.GetService(typeof(IAuthenticationService)))
-              .Returns(() => {
+              .Returns(() =>
+              {
                   return authenticationService.Object;
               });
 
@@ -42,48 +46,62 @@ namespace CashflowUI.Tests
         {
             Mock<IHttpContextAccessor> mockAccessor = new();
             mockAccessor.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
-            return mockAccessor;           
+            return mockAccessor;
         }
 
         [Fact]
-        public void ValidateLoginInfo_CorrectInputs_ShouldWork()
+        public void CanLogin_CorrectInputs_ShouldWork()
         {
-            ILoginManager manager = new LoginManager(Accessor);
-
-            var result = manager.ValidateLoginInfo("testUser", "testPassword");
+            var result = _logManager.CanLogin("testUser", "testPassword");
 
             result.Should().BeTrue();
         }
 
         [Fact]
-        public void ValidateLoginInfo_WrongPassword_ShouldNotWork()
+        public void CanLogin_WrongPassword_ShouldNotWork()
         {
-            ILoginManager manager = new LoginManager(Accessor);
-
-            var result = manager.ValidateLoginInfo("testUser", "Wrong Password");
+            var result = _logManager.CanLogin("testUser", "Wrong Password");
 
             result.Should().BeFalse();
         }
 
         [Fact]
-        public void ValidateLoginInfo_WrongUser_ShouldNotWork()
+        public void CanLogin_WrongUser_ShouldNotWork()
         {
-            ILoginManager manager = new LoginManager(Accessor);
-
-            var result = manager.ValidateLoginInfo("Wrong User", "testPassword");
+            var result = _logManager.CanLogin("Wrong User", "testPassword");
 
             result.Should().BeFalse();
         }
 
         [Fact]
-        public void ValidateLoginInfo_WrongUserAndPassword_ShouldNotWork()
+        public void CanLogin_WrongUserAndPassword_ShouldNotWork()
         {
-            ILoginManager manager = new LoginManager(Accessor);
-
-            var result = manager.ValidateLoginInfo("Wrong User", "Wrong Password");
+            var result = _logManager.CanLogin("Wrong User", "Wrong Password");
 
             result.Should().BeFalse();
         }
+
+        //[Fact]
+        //public async Task SignInUserAsync_ShouldLogin()
+        //{
+        //    ILoginManager manager = new LoginManager(Accessor);
+
+        //    await manager.SignInUserAsync("testUser");
+
+        //    var result = Accessor.HttpContext?.Request.Cookies[LoginManager.LoginCookieString];
+
+        //    result.Should().NotBe(null);
+        //}
+
+        //[Fact]
+        //public async void SignOutUserAsync_ShouldLogout()
+        //{
+        //    ILoginManager manager = new LoginManager(Accessor);
+        //    await manager.SignOutUserAsync();
+        //    var result = Accessor.HttpContext?.Request.Cookies[LoginManager.LoginCookieString];
+
+        //    result.Should().Be(null);
+        //}
 
     }
 }

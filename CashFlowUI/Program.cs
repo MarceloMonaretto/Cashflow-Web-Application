@@ -15,6 +15,8 @@ builder.Services.AddAuthentication(LoginManager.LoginCookieString).AddCookie(Log
 
 builder.Services.AddScoped<ILoginManager, LoginManager>();
 
+builder.Services.AddScoped<IAccountManager, AccountManager>();
+
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();

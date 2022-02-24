@@ -2,11 +2,8 @@
 {
     public interface ILoginManager
     {
-        bool ValidateLoginInfo(string user, string password);
-
-        Task<bool> SignInUserAsync(string user);
-        Task<bool> SignOutUserAsync();
-
-        string GetUserRole(string user);
+        Task SignInUserAsync(string user);
+        Task SignOutUserAsync();
+        bool CanLogin(string user, string password);
     }
 }

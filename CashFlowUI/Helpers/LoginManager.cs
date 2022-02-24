@@ -8,60 +8,42 @@ namespace CashFlowUI.Helpers
     {
         public const string LoginCookieString = "MyLoginCookie";
 
-        private readonly List<string[]> Users = new()
-        {
-            new string[]{ "manager", "Boss123", "manager" },
-            new string[]{ "employee", "Employee123", "staff" },
-            new string[]{ "testUser", "testPassword", "testRole" }
-        };
-
         private readonly HttpContext _httpContext;
+        private readonly IAccountManager _accManager;
 
-        public LoginManager(IHttpContextAccessor httpContextAccessor) =>
-            _httpContext = httpContextAccessor.HttpContext;
-
-        public async Task<bool> SignInUserAsync(string user)
+        public LoginManager(IHttpContextAccessor httpContextAccessor, IAccountManager accManager)
         {
-            var principal = CreateClaimPrincipal(user);
-            await _httpContext.SignInAsync("MyLoginCookie", principal);
-
-            return true;
+            _httpContext = httpContextAccessor.HttpContext;
+            _accManager = accManager;
         }
 
-        public async Task<bool> SignOutUserAsync()
+        public bool CanLogin(string user, string password)
+        {
+            return _accManager.ValidateLoginInfo(user, password);
+        }
+
+        public async Task SignInUserAsync(string user)
+        {
+            var principal = CreateClaimPrincipal(user);
+            await _httpContext.SignInAsync(LoginCookieString, principal);
+        }
+
+        public async Task SignOutUserAsync()
         {
 
             await _httpContext.SignOutAsync(LoginCookieString);
-
-            return true;
         }
 
         private ClaimsPrincipal CreateClaimPrincipal(string user)
         {
             var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user)
+                        new Claim(ClaimTypes.Name, user),
+                        new Claim(ClaimTypes.Role, _accManager.GetUserRole(user)),
                     };
 
             ClaimsIdentity userIdentity = new(claims, LoginCookieString);
             return new ClaimsPrincipal(userIdentity);
-        }
-
-        public bool ValidateLoginInfo(string user, string password)
-        {
-            try
-            {
-                return Users.Single(u => u[0] == user && u[1] == password).Any();
-            }
-            catch
-            {
-                return false;
-            }            
-        }
-
-        public string GetUserRole(string user)
-        {
-            return Users.First(u => u[0] == user)[2];
         }
     }
 }

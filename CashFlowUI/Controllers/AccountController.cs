@@ -34,14 +34,7 @@ namespace CashFlowUI.Controllers
         [HttpPost, ActionName("Login")]
         public async Task<IActionResult> Login(LoginViewModel login, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
-                return View(login);
-            }
-
-            var isUserValid = _loginManager.ValidateLoginInfo(login.User, login.Password);
-            if (!isUserValid)
+            if (!ModelState.IsValid || !_loginManager.CanLogin(login.User, login.Password))
             {
                 ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
                 return View(login);
@@ -50,12 +43,13 @@ namespace CashFlowUI.Controllers
             await _loginManager.SignInUserAsync(login.User);
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
-                return View("Login", login);
-                
+                ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.ThereWasAnErrorWithLoginMessage;
+                return View(login);
             }
-
-            return RedirectToAction("Login", "Home");
+            else
+            {
+                return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Login", "Home");
+            }
         }
     }
 }
