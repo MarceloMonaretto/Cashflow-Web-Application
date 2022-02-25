@@ -12,7 +12,7 @@ namespace AccountInformationAPI.Data
             _context = context;
         }
 
-        public async Task CreateAccountAsync(AccountModel account)
+        public async Task<bool> CreateAccountAsync(AccountModel account)
         {
             if (account == null)
             {
@@ -20,9 +20,10 @@ namespace AccountInformationAPI.Data
             }
 
             await _context.Accounts.AddAsync(account);
+            return SaveChanges();
         }
 
-        public async Task DeleteAccountAsync(int id)
+        public async Task<bool> DeleteAccountAsync(int id)
         {
             AccountModel account = await GetAccountByIdAsync(id);
 
@@ -32,6 +33,7 @@ namespace AccountInformationAPI.Data
             }
 
             _context.Accounts.Remove(account);
+            return SaveChanges();
         }
 
         public async Task<IEnumerable<AccountModel>> GetAllAccountsAsync()
@@ -46,12 +48,12 @@ namespace AccountInformationAPI.Data
                 .FirstOrDefaultAsync();
         }
 
-        public bool SaveChanges()
+        private bool SaveChanges()
         {
             return _context.SaveChanges() >= 0;
         }
 
-        public async Task UpdateAccountAsync(AccountModel updatedAccount, int id)
+        public async Task<bool> UpdateAccountAsync(AccountModel updatedAccount, int id)
         {
             AccountModel account = await GetAccountByIdAsync(id);
 
@@ -63,6 +65,8 @@ namespace AccountInformationAPI.Data
             account.UserCredentialName = updatedAccount.UserCredentialName;
             account.UserCredentialPassword = updatedAccount.UserCredentialPassword;
             account.Role = updatedAccount.Role;
+
+            return SaveChanges();
         }
     }
 }

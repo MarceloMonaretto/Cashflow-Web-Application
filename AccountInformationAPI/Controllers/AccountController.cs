@@ -30,7 +30,6 @@ namespace AccountInformationAPI.Controllers
             }
 
             await _accountRepository.CreateAccountAsync(currency);
-            _accountRepository.SaveChanges();
 
             var currencyReadDto = _autoMapper.Map<AccountReadDto>(currency);
 
@@ -64,7 +63,6 @@ namespace AccountInformationAPI.Controllers
             AccountModel account = _autoMapper.Map<AccountModel>(accountUpdateDto);
 
             await _accountRepository.UpdateAccountAsync(account, id);
-            _accountRepository.SaveChanges();
 
             return Ok(account);
         }
@@ -73,7 +71,6 @@ namespace AccountInformationAPI.Controllers
         public async Task<IActionResult> DeleteAccountAsync(int id)
         {
             await _accountRepository.DeleteAccountAsync(id);
-            _accountRepository.SaveChanges();
 
             return NoContent();
         }
