@@ -1,20 +1,14 @@
-using AccountInformationAPI.Data;
-using Microsoft.EntityFrameworkCore;
+using AccountRepositoryLib.Connection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddDbContext<AccountContext>(
-options => options.UseSqlServer(builder.Configuration.GetConnectionString("AccountContext")));
 
 
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-
+builder.Services.AddScoped<IAccountRepositoryConnection, AccountRepositoryConnection>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

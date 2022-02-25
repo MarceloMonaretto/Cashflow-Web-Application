@@ -1,4 +1,4 @@
-﻿using AccountManagerLib.Models;
+﻿using AccountModelsLib.Models;
 using CashFlowUI.HttpClients;
 
 namespace CashFlowUI.Helpers
@@ -7,10 +7,7 @@ namespace CashFlowUI.Helpers
     {
         private readonly IAccountClient _accountClient;
 
-        public AccountManager(IAccountClient accountClient)
-        {
-            _accountClient = accountClient;
-        }
+        public AccountManager(IAccountClient accountClient) => _accountClient = accountClient;
 
         public async Task<bool> ValidateLoginInfoAsync(string userName, string password)
         {
@@ -33,9 +30,6 @@ namespace CashFlowUI.Helpers
             return user;
         }
 
-        public async Task<string> GetUserRoleAsync(string userName)
-        {
-            return (await GetAccountByUserNameAsync(userName))?.Role;
-        }
+        public async Task<string> GetUserRoleAsync(string userName) => (await GetAccountByUserNameAsync(userName))?.Role;
     }
 }

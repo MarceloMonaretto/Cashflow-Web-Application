@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AccountManagerLib.Models
+namespace AccountModelsLib.Models
 {
     public class AccountModel
     {

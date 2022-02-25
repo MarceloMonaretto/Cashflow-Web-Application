@@ -1,6 +1,6 @@
-﻿using AccountInformationAPI.Data;
+﻿using AccountRepositoryLib.Connection;
 using AccountInformationAPI.Dtos;
-using AccountInformationAPI.Models;
+using AccountModelsLib.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +11,12 @@ namespace AccountInformationAPI.Controllers
     public class AccountController : Controller
     {
         private readonly IMapper _autoMapper;
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountRepositoryConnection _accountRepositoryConnection;
 
-        public AccountController(IMapper mapper, IAccountRepository repo)
+        public AccountController(IMapper mapper, IAccountRepositoryConnection repo)
         {
             _autoMapper = mapper;
-            _accountRepository = repo;
+            _accountRepositoryConnection = repo;
         }
 
         [HttpPost("Create")]
@@ -29,7 +29,7 @@ namespace AccountInformationAPI.Controllers
                 return BadRequest(accountDto);
             }
 
-            await _accountRepository.CreateAccountAsync(currency);
+            await _accountRepositoryConnection.Repository.CreateAccountAsync(currency);
 
             var currencyReadDto = _autoMapper.Map<AccountReadDto>(currency);
 
@@ -39,7 +39,7 @@ namespace AccountInformationAPI.Controllers
         [HttpGet("All")]
         public async Task<IEnumerable<AccountReadDto>> GetCurrenciesAsync()
         {
-            var accounts = await _accountRepository.GetAllAccountsAsync();
+            var accounts = await _accountRepositoryConnection.Repository.GetAllAccountsAsync();
 
             return _autoMapper.Map<IEnumerable<AccountReadDto>>(accounts);
         }
@@ -47,7 +47,7 @@ namespace AccountInformationAPI.Controllers
         [HttpGet("{id}"), ActionName("GetAccountByIdAsync")]
         public async Task<ActionResult<AccountReadDto>> GetAccountByIdAsync(int id)
         {
-            AccountModel account = await _accountRepository.GetAccountByIdAsync(id);
+            AccountModel account = await _accountRepositoryConnection.Repository.GetAccountByIdAsync(id);
 
             if (account == null)
             {
@@ -62,7 +62,7 @@ namespace AccountInformationAPI.Controllers
         {
             AccountModel account = _autoMapper.Map<AccountModel>(accountUpdateDto);
 
-            await _accountRepository.UpdateAccountAsync(account, id);
+            await _accountRepositoryConnection.Repository.UpdateAccountAsync(account, id);
 
             return Ok(account);
         }
@@ -70,7 +70,7 @@ namespace AccountInformationAPI.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteAccountAsync(int id)
         {
-            await _accountRepository.DeleteAccountAsync(id);
+            await _accountRepositoryConnection.Repository.DeleteAccountAsync(id);
 
             return NoContent();
         }

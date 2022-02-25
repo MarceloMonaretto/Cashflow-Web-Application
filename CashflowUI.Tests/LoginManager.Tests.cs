@@ -1,4 +1,4 @@
-﻿using AccountManagerLib.Models;
+﻿using AccountModelsLib.Models;
 using CashFlowUI.Helpers;
 using CashFlowUI.HttpClients;
 using FluentAssertions;
@@ -26,7 +26,9 @@ namespace CashflowUI.Tests
             var mockServiceProvider = MockServiceProvider();
             _accManager = new CashFlowUI.Helpers.AccountManager(MockAccountClient().Object);
             _mockHttpContextAccessor = MockHttpContextAccessor().Object;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             _mockHttpContextAccessor.HttpContext.RequestServices = mockServiceProvider.Object;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             _logManager = new LoginManager(_mockHttpContextAccessor, _accManager);
 
         }

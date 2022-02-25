@@ -1,4 +1,4 @@
-﻿using AccountManagerLib.Models;
+﻿using AccountModelsLib.Models;
 using CashFlowUI.Helpers;
 using CashFlowUI.HttpClients;
 using FluentAssertions;

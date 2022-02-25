@@ -1,7 +1,8 @@
-﻿using AccountInformationAPI.Models;
+﻿using AccountInformationAPI.Data;
+using AccountManagerLib.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AccountInformationAPI.Data
+namespace AccountRepository.Data
 {
     public class AccountRepository : IAccountRepository
     {

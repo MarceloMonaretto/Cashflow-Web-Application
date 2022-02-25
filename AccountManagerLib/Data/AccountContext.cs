@@ -1,7 +1,7 @@
-﻿using AccountInformationAPI.Models;
+﻿using AccountModelsLib.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AccountInformationAPI.Data
+namespace AccountRepositoryLib.Data
 {
     public class AccountContext : DbContext
     {

@@ -1,4 +1,4 @@
-﻿using AccountManagerLib.Models;
+﻿using AccountModelsLib.Models;
 
 namespace CashFlowUI.HttpClients
 {

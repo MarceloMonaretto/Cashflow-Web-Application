@@ -1,6 +1,6 @@
-﻿using AccountInformationAPI.Models;
+﻿using AccountModelsLib.Models;
 
-namespace AccountInformationAPI.Data
+namespace AccountRepositoryLib.Data
 {
     public interface IAccountRepository
     {
@@ -8,6 +8,6 @@ namespace AccountInformationAPI.Data
         Task<bool> DeleteAccountAsync(int id);
         Task<AccountModel> GetAccountByIdAsync(int id);
         Task<IEnumerable<AccountModel>> GetAllAccountsAsync();
-        Task UpdateAccountAsync(AccountModel updatedAccount, int id);
+        Task<bool> UpdateAccountAsync(AccountModel updatedAccount, int id);
     }
 }

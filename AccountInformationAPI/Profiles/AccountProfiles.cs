@@ -1,5 +1,5 @@
 ﻿using AccountInformationAPI.Dtos;
-using AccountInformationAPI.Models;
+using AccountModelsLib.Models;
 using AutoMapper;
 
 namespace AccountInformationAPI.Profiles
