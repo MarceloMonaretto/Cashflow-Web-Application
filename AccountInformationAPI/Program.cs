@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AccountContext>(
 options => options.UseSqlServer(builder.Configuration.GetConnectionString("AccountContext")));
 
 
-builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
