@@ -4,6 +4,6 @@
     {
         public const string InvalidLoginMessage = "Invalid Login Info!";
 
-        public const string ThereWasAnErrorWithLoginMessage = "There as an error with login, please try again.";
+        public const string ThereWasAnErrorWithLoginMessage = "There was an error with login, please try again.";
     }
 }

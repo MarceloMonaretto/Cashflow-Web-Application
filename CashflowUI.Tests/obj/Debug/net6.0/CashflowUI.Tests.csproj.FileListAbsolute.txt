@@ -7,7 +7,6 @@ C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debu
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashflowUI.Tests.deps.json
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashflowUI.Tests.runtimeconfig.json
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashflowUI.Tests.dll
-C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\ref\CashflowUI.Tests.dll
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashflowUI.Tests.pdb
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\Microsoft.TestPlatform.CoreUtilities.dll
@@ -333,3 +332,8 @@ C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debu
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashFlowUI.dll
 C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\CashFlowUI.pdb
+C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\obj\Debug\net6.0\refint\CashflowUI.Tests.dll
+C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\AccountManagerLib.dll
+C:\Users\marcelo.monaretto\source\repos\cashflowwebapp\CashflowUI.Tests\bin\Debug\net6.0\AccountManagerLib.pdb

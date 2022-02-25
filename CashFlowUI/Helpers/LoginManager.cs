@@ -17,14 +17,14 @@ namespace CashFlowUI.Helpers
             _accManager = accManager;
         }
 
-        public bool CanLogin(string user, string password)
+        public async Task<bool> CanLoginAsync(string user, string password)
         {
-            return _accManager.ValidateLoginInfo(user, password);
+            return await _accManager.ValidateLoginInfoAsync(user, password);
         }
 
         public async Task SignInUserAsync(string user)
         {
-            var principal = CreateClaimPrincipal(user);
+            var principal = await CreateClaimPrincipalAsync(user);
             await _httpContext.SignInAsync(LoginCookieString, principal);
         }
 
@@ -34,12 +34,19 @@ namespace CashFlowUI.Helpers
             await _httpContext.SignOutAsync(LoginCookieString);
         }
 
-        private ClaimsPrincipal CreateClaimPrincipal(string user)
+        private async Task<ClaimsPrincipal> CreateClaimPrincipalAsync(string user)
         {
+
+            var userRole = await _accManager.GetUserRoleAsync(user);
+            if (userRole == null)
+            {
+                userRole = "Viewer";
+            }
+
             var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user),
-                        new Claim(ClaimTypes.Role, _accManager.GetUserRole(user)),
+                        new Claim(ClaimTypes.Role, userRole)
                     };
 
             ClaimsIdentity userIdentity = new(claims, LoginCookieString);

@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlowUI", "CashFlowUI.csproj", "{08A474BD-11E7-4C31-94FD-712CF5C1C41D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlowUI", "CashFlowUI\CashFlowUI.csproj", "{08A474BD-11E7-4C31-94FD-712CF5C1C41D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashflowUI.Tests", "..\CashflowUI.Tests\CashflowUI.Tests.csproj", "{BD46F786-CA83-4694-A4CF-B5C6D5CBD7A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashflowUI.Tests", "CashflowUI.Tests\CashflowUI.Tests.csproj", "{BD46F786-CA83-4694-A4CF-B5C6D5CBD7A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountInformationAPI", "AccountInformationAPI\AccountInformationAPI.csproj", "{69285EA5-9BA9-4CBA-807B-8CA00FE7CA2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountManagerLib", "AccountManagerLib\AccountManagerLib.csproj", "{758F654E-20B5-44EC-9122-9172BDEECFF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{BD46F786-CA83-4694-A4CF-B5C6D5CBD7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD46F786-CA83-4694-A4CF-B5C6D5CBD7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD46F786-CA83-4694-A4CF-B5C6D5CBD7A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69285EA5-9BA9-4CBA-807B-8CA00FE7CA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69285EA5-9BA9-4CBA-807B-8CA00FE7CA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69285EA5-9BA9-4CBA-807B-8CA00FE7CA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69285EA5-9BA9-4CBA-807B-8CA00FE7CA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{758F654E-20B5-44EC-9122-9172BDEECFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758F654E-20B5-44EC-9122-9172BDEECFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758F654E-20B5-44EC-9122-9172BDEECFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758F654E-20B5-44EC-9122-9172BDEECFF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

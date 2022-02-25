@@ -1,29 +1,41 @@
-﻿namespace CashFlowUI.Helpers
+﻿using AccountManagerLib.Models;
+using CashFlowUI.HttpClients;
+
+namespace CashFlowUI.Helpers
 {
     public class AccountManager : IAccountManager
     {
-        private readonly List<string[]> Users = new()
-        {
-            new string[] { "manager", "Boss123", "manager" },
-            new string[] { "employee", "Employee123", "staff" },
-            new string[] { "testUser", "testPassword", "testRole" }
-        };
+        private readonly IAccountClient _accountClient;
 
-        public bool ValidateLoginInfo(string user, string password)
+        public AccountManager(IAccountClient accountClient)
         {
-            try
-            {
-                return Users.Single(u => u[0] == user && u[1] == password).Any();
-            }
-            catch
-            {
-                return false;
-            }
+            _accountClient = accountClient;
         }
 
-        public string GetUserRole(string user)
+        public async Task<bool> ValidateLoginInfoAsync(string userName, string password)
         {
-            return Users.FirstOrDefault(u => u[0] == user)?[2];
+            var accounts = await _accountClient.GetAllAccountsAsync();
+
+            var isValidUser = accounts
+                .Where(acc => string.Equals(acc.UserCredentialName, userName, StringComparison.OrdinalIgnoreCase)
+                && acc.UserCredentialPassword == password).Any();
+
+            return isValidUser;
+        }
+
+        public async Task<AccountModel> GetAccountByUserNameAsync(string userName)
+        {
+            var accounts = await _accountClient.GetAllAccountsAsync();
+            var user = accounts
+                .FirstOrDefault(acc => 
+                string.Equals(acc.UserCredentialName, userName, StringComparison.OrdinalIgnoreCase));
+
+            return user;
+        }
+
+        public async Task<string> GetUserRoleAsync(string userName)
+        {
+            return (await GetAccountByUserNameAsync(userName))?.Role;
         }
     }
 }

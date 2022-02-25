@@ -34,7 +34,7 @@ namespace CashFlowUI.Controllers
         [HttpPost, ActionName("Login")]
         public async Task<IActionResult> Login(LoginViewModel login, string returnUrl)
         {
-            if (!ModelState.IsValid || !_loginManager.CanLogin(login.User, login.Password))
+            if (!ModelState.IsValid || !(await _loginManager.CanLoginAsync(login.User, login.Password)))
             {
                 ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
                 return View(login);

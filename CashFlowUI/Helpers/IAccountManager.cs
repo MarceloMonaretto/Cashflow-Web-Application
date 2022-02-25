@@ -1,8 +1,12 @@
-﻿namespace CashFlowUI.Helpers
+﻿using AccountManagerLib.Models;
+
+namespace CashFlowUI.Helpers
 {
     public interface IAccountManager
     {
-        string GetUserRole(string user);
-        bool ValidateLoginInfo(string user, string password);
+        Task<string> GetUserRoleAsync(string user);
+        Task<bool> ValidateLoginInfoAsync(string user, string password);
+
+        Task<AccountModel> GetAccountByUserNameAsync(string userName);
     }
 }

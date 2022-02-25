@@ -1,4 +1,5 @@
 using CashFlowUI.Helpers;
+using CashFlowUI.HttpClients;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IAccountClient, AccountClient>();
+
+builder.Services.AddHttpClient<IAccountClient, AccountClient>(client => {
+    client.BaseAddress = new System.Uri("http://localhost:5000/accountapi/");
+});
 
 builder.Services.AddAuthentication(LoginManager.LoginCookieString).AddCookie(LoginManager.LoginCookieString, options =>
 {

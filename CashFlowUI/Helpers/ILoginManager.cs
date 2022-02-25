@@ -4,6 +4,6 @@
     {
         Task SignInUserAsync(string user);
         Task SignOutUserAsync();
-        bool CanLogin(string user, string password);
+        Task<bool> CanLoginAsync(string user, string password);
     }
 }

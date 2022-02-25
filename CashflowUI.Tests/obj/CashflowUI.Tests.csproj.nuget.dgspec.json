@@ -4,6 +4,64 @@
     "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\CashflowUI.Tests\\CashflowUI.Tests.csproj": {}
   },
   "projects": {
+    "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\AccountManagerLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\AccountManagerLib.csproj",
+        "projectName": "AccountManagerLib",
+        "projectPath": "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\AccountManagerLib.csproj",
+        "packagesPath": "C:\\Users\\marcelo.monaretto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\marcelo.monaretto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\CashflowUI.Tests\\CashflowUI.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -88,7 +146,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -119,7 +177,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\AccountManagerLib.csproj": {
+                "projectPath": "C:\\Users\\marcelo.monaretto\\source\\repos\\cashflowwebapp\\AccountManagerLib\\AccountManagerLib.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -132,6 +194,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.2, )"
@@ -195,7 +261,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
