@@ -14,7 +14,6 @@ namespace CashFlowUI.Controllers
 
         public IActionResult Index()
         {
-            var test = User.Identity;
             return View();
         }
 
