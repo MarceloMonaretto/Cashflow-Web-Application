@@ -23,18 +23,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <div class="loginButtonHeader">
+                    <div>
                         @if (User.Identity.IsAuthenticated)
                         { 
-                            <div>
+                            <div class="text-center">
                                 Welcome, <b>@User.Identity.Name</b> | 
-                                <a class="btn btn-link" asp-action="Logout" asp-controller="Account">Logout</a>
-                            </div>
-                            
+                                <a class="logoutButtonHeader" asp-action="Logout" asp-controller="Account">Logout</a>
+                            </div>                            
                         }
                         else
                         {
-                            <a class="btn btn-link" asp-action="Login" asp-controller="Account">Login</a>
+                            <a class="loginButtonHeader" asp-action="Login" asp-controller="Account">Login</a>
                         }
                     </div>
                 </div>

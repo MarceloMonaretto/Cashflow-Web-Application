@@ -30,7 +30,6 @@ namespace CashflowUI.Tests
             _mockHttpContextAccessor.HttpContext.RequestServices = mockServiceProvider.Object;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             _logManager = new LoginManager(_mockHttpContextAccessor, _accManager);
-
         }
 
         private Mock<IServiceProvider> MockServiceProvider()

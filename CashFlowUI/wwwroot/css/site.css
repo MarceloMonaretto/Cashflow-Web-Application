@@ -39,6 +39,48 @@ body {
     margin-bottom: 10px;
 }
 
-.loginButtonHeader{
+.loginButtonHeader {
     margin-right: 40px;
+    background-color: red;
+    color: white;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius:10px;
+    border-style:solid;
+    border-color: red;
+}
+
+.loginButtonHeader:hover{
+    color: black;
+    font-size:20px;
+}
+
+.logoutButtonHeader {
+    margin-right: 40px;
+    background-color: dodgerblue;
+    color: white;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: dodgerblue;
+}
+
+.logoutButtonHeader:hover {
+    color: black;
+    font-size: 20px;
+}
+
+
+.formField {
+    border-style: hidden;
+    margin-top: 20px;
+}
+
+#rememberMeButton {
+    border-style: hidden;
+    margin-top: 20px;
+    margin-left: 189px;
 }

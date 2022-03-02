@@ -41,15 +41,7 @@ namespace CashFlowUI.Controllers
             }
 
             await _loginManager.SignInUserAsync(login.User);
-            if (!User.Identity.IsAuthenticated)
-            {
-                ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.ThereWasAnErrorWithLoginMessage;
-                return View(login);
-            }
-            else
-            {
-                return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Login", "Home");
-            }
+            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Index", "Home");
         }
     }
 }
