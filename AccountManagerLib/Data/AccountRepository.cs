@@ -5,9 +5,9 @@ namespace AccountRepositoryLib.Data
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly AccountContext _context;
+        private readonly IAccountContext _context;
 
-        public AccountRepository(AccountContext context)
+        public AccountRepository(IAccountContext context)
         {
             _context = context;
         }
@@ -50,7 +50,7 @@ namespace AccountRepositoryLib.Data
 
         private bool SaveChanges()
         {
-            return _context.SaveChanges() >= 0;
+            return _context.SaveChangesInDataBase() >= 0;
         }
 
         public async Task<bool> UpdateAccountAsync(AccountModel updatedAccount, int id)
