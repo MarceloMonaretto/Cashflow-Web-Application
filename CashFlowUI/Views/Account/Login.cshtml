@@ -1,0 +1,45 @@
+﻿@model CashFlowUI.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<h1>Login</h1>
+
+<div class="container border" style="padding:20px">
+    <div class="row">
+        <h3 class="loginTitle">Login in the system</h3>
+    </div>
+    <span id="loginErrorMessage">@ViewBag.LoginErrorMessage</span>
+    <div class="row">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, null, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="formField">
+                    @Html.LabelFor(m => m.User, new {@class = "col-3"})
+                    <span asp-validation-for="User" class="text-danger"></span>
+                    @Html.TextBoxFor(m => m.User, new { @class="col-5" })
+                </div>
+                <div class="formField">
+                    @Html.LabelFor(m => m.Password, new {@class = "col-3"})
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    @Html.PasswordFor(m => m.Password, new { @class="col-5" })
+                </div>
+                <div id="rememberMeButton">
+                    <div class="col-md-10 col-md-offset-2">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+                <div class="formField">
+                    <div class="col-md-10 col-md-offset-2">
+                        <input type="submit" class="btn btn-success" value="Login" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
