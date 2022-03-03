@@ -18,18 +18,18 @@ namespace CashflowUI.Tests
     public class LoginManagerTests
     {
         private readonly IHttpContextAccessor _mockHttpContextAccessor;
-        private readonly IAccountManager _accManager;
-        private readonly ILoginManager _logManager;
+        private readonly IAccountManager _accountManager;
+        private readonly ILoginManager _loginManager;
 
         public LoginManagerTests()
         {
             var mockServiceProvider = MockServiceProvider();
-            _accManager = new CashFlowUI.Helpers.AccountManager(MockAccountClient().Object);
+            _accountManager = new CashFlowUI.Helpers.AccountManager(MockAccountClient().Object);
             _mockHttpContextAccessor = MockHttpContextAccessor().Object;
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             _mockHttpContextAccessor.HttpContext.RequestServices = mockServiceProvider.Object;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-            _logManager = new LoginManager(_mockHttpContextAccessor, _accManager);
+            _loginManager = new LoginManager(_mockHttpContextAccessor, _accountManager);
         }
 
         private Mock<IServiceProvider> MockServiceProvider()
@@ -56,7 +56,7 @@ namespace CashflowUI.Tests
         [Fact]
         public async Task CanLoginAsync_CorrectInputs_ShouldWorkAsync()
         {
-            var result = await _logManager.CanLoginAsync("testUser", "testPassword");
+            var result = await _loginManager.CanLoginAsync("testUser", "testPassword");
 
             result.Should().BeTrue();
         }
@@ -64,7 +64,7 @@ namespace CashflowUI.Tests
         [Fact]
         public async Task CanLoginAsync_WrongPassword_ShouldNotWorkAsync()
         {
-            var result = await _logManager.CanLoginAsync("testUser", "Wrong Password");
+            var result = await _loginManager.CanLoginAsync("testUser", "Wrong Password");
 
             result.Should().BeFalse();
         }
@@ -72,7 +72,7 @@ namespace CashflowUI.Tests
         [Fact]
         public async Task CanLoginAsync_WrongUser_ShouldNotWorkAsync()
         {
-            var result = await _logManager.CanLoginAsync("Wrong User", "testPassword");
+            var result = await _loginManager.CanLoginAsync("Wrong User", "testPassword");
 
             result.Should().BeFalse();
         }
@@ -80,7 +80,7 @@ namespace CashflowUI.Tests
         [Fact]
         public async Task CanLoginAsync_WrongUserAndPassword_ShouldNotWorkAsync()
         {
-            var result = await _logManager.CanLoginAsync("Wrong User", "Wrong Password");
+            var result = await _loginManager.CanLoginAsync("Wrong User", "Wrong Password");
 
             result.Should().BeFalse();
         }
