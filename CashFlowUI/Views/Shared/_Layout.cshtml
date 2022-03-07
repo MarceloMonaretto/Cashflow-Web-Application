@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using CashFlowUI.Helpers
+@inject IRolesManager rolesManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,16 +23,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Unprotected Menu</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userRole = rolesManager.GetUserRoleFromClaims();
+                            @if (await rolesManager.VerifyRoleMenuPermissionAsync(userRole, "Add Transaction"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Broken Controller Link" asp-action="Privacy">Add Transaction</a>
+                                </li>
+                            }
+                            @if (await rolesManager.VerifyRoleMenuPermissionAsync(userRole, "Transaction List"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Broken Controller Link" asp-action="Privacy">Transaction List</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <div>
                         @if (User.Identity.IsAuthenticated)
-                        { 
+                        {
                             <div class="text-center">
-                                Welcome, <b>@User.Identity.Name</b> | 
+                                Welcome, <b>@User.Identity.Name</b> |
                                 <a class="logoutButtonHeader" asp-action="Logout" asp-controller="Account">Logout</a>
-                            </div>                            
+                            </div>
                         }
                         else
                         {

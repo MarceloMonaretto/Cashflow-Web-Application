@@ -1,5 +1,5 @@
-﻿using AccountModelsLib.Models;
-using CashFlowUI.HttpClients;
+﻿using CashFlowUI.HttpClients;
+using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.Helpers
 {
@@ -14,22 +14,22 @@ namespace CashFlowUI.Helpers
             var accounts = await _accountClient.GetAllAccountsAsync();
 
             var isValidUser = accounts
-                .Where(acc => string.Equals(acc.UserCredentialName, userName, StringComparison.OrdinalIgnoreCase)
-                && acc.UserCredentialPassword == password).Any();
+                .Where(acc => string.Equals(acc.UserName, userName, StringComparison.OrdinalIgnoreCase)
+                && acc.UserPassword == password).Any();
 
             return isValidUser;
         }
 
-        public async Task<AccountModel> GetAccountByUserNameAsync(string userName)
+        public async Task<Account> GetAccountByUserNameAsync(string userName)
         {
             var accounts = await _accountClient.GetAllAccountsAsync();
             var user = accounts
                 .FirstOrDefault(acc => 
-                string.Equals(acc.UserCredentialName, userName, StringComparison.OrdinalIgnoreCase));
+                string.Equals(acc.UserName, userName, StringComparison.OrdinalIgnoreCase));
 
             return user;
         }
 
-        public async Task<string> GetUserRoleAsync(string userName) => (await GetAccountByUserNameAsync(userName))?.Role;
+        public async Task<string> GetUserRoleAsync(string userName) => (await GetAccountByUserNameAsync(userName))?.UserRole;
     }
 }

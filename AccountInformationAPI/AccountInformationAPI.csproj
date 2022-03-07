@@ -6,21 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\AccountModel.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AccountManagerLib\AccountRepositoryLib.csproj" />
-    <ProjectReference Include="..\AccountModelsLib\AccountModelsLib.csproj" />
+    <ProjectReference Include="..\AccountRepositoryLib\AccountRepositoryLib.csproj" />
+    <ProjectReference Include="..\RolePermissionRepositoryLib\RoleRepositoryLib.csproj" />
+    <ProjectReference Include="..\TransactionRepository\TransactionRepositoryLib.csproj" />
   </ItemGroup>
 
 </Project>

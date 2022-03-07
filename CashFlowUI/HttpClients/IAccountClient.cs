@@ -1,13 +1,13 @@
-﻿using AccountModelsLib.Models;
+﻿using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.HttpClients
 {
     public interface IAccountClient
     {
-        Task CreateAccountAsync(AccountModel account);
+        Task CreateAccountAsync(Account account);
         Task DeleteAccountAsync(int id);
-        Task<IEnumerable<AccountModel>> GetAllAccountsAsync();
-        Task<AccountModel> GetAccountByIdAsync(int id);
-        Task UpdateAccountAsync(AccountModel account);
+        Task<IEnumerable<Account>> GetAllAccountsAsync();
+        Task<Account> GetAccountByIdAsync(int id);
+        Task UpdateAccountAsync(Account account);
     }
 }
