@@ -19,7 +19,7 @@ namespace CashFlowUI.Helpers
         {
             var transactions = await GetAllTransactionsAsync();
 
-            var validTransactions = transactions
+            var validTransactions = transactions?
                 .Where(t => DateTime.Compare(t.TransactionTime, start) >= 0 && DateTime.Compare(t.TransactionTime, end) <= 0);
 
             return validTransactions;

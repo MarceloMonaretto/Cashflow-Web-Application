@@ -28,8 +28,8 @@ namespace PopulateDatabaseLib
         public async Task PopulateAccountsAsync()
         {
             var accounts = GenerateAccountEntries();
-
-            if (!_accountRepository.GetAllAccountsAsync().Result.Any())
+            var areThereAccounts = (await _accountRepository.GetAllAccountsAsync()).Any();
+            if (!areThereAccounts)
             {
                 foreach (var account in accounts)
                 {
@@ -41,7 +41,8 @@ namespace PopulateDatabaseLib
         public async Task PopulateRolesAsync()
         {
             var roles = GenerateRoleEntries();
-            if (!_roleRepository.GetAllRolesAsync().Result.Any())
+            var areThereRoles = (await _roleRepository.GetAllRolesAsync()).Any();
+            if (!areThereRoles)
             {
                 foreach (var role in roles)
                 {
@@ -53,8 +54,8 @@ namespace PopulateDatabaseLib
         public async Task PopulateTransitionsAsync()
         {
             var transactions = GenerateTransactionEntries();
-
-            if (!_transactionRepository.GetAllTransactionsAsync().Result.Any())
+            var areThereTransactions = (await _transactionRepository.GetAllTransactionsAsync()).Any();
+            if (!areThereTransactions)
             {
                 foreach (var transaction in transactions)
                 {
