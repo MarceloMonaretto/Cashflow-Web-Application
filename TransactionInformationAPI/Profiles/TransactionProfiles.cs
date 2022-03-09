@@ -1,8 +1,8 @@
-﻿using AccountInformationAPI.Dtos;
+﻿using TransactionInformationAPI.Dtos;
 using ModelsLib.ContextRepositoryClasses;
 using AutoMapper;
 
-namespace AccountInformationAPI.Profiles
+namespace TransactionInformationAPI.Profiles
 {
     public class TransactionProfiles : Profile
     {

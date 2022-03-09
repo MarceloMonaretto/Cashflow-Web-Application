@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ModelsLib.ContextRepositoryClasses
+namespace TransactionInformationAPI.Dtos
 {
     public class TransactionCreateDto
     {

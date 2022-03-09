@@ -25,6 +25,21 @@ namespace PopulateDatabaseLib
             _transactionRepository = transactionRepository;
         }
 
+        public DatabasePopulator(IAccountRepository accountRepository,
+            IRoleRepository roleRepository)
+        {
+            _accountRepository = accountRepository;
+            _roleRepository = roleRepository;
+            _transactionRepository = null;
+        }
+
+        public DatabasePopulator(ITransactionRepository transactionRepository)
+        {
+            _accountRepository = null;
+            _roleRepository = null;
+            _transactionRepository = transactionRepository;
+        }
+
         public async Task PopulateAccountsAsync()
         {
             var accounts = GenerateAccountEntries();

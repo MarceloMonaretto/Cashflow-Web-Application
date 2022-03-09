@@ -1,10 +1,10 @@
-﻿using AccountInformationAPI.Dtos;
+﻿using TransactionInformationAPI.Dtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLib.ContextRepositoryClasses;
 using TransactionRepositoryLib.Connection;
 
-namespace AccountInformationAPI.Controllers
+namespace TransactionInformationAPI.Controllers
 {
     [ApiController]
     [Route("cashflowapi/[controller]")]
@@ -20,7 +20,7 @@ namespace AccountInformationAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult<RoleReadDto>> CreateTransactionAsync([FromBody] TransactionCreateDto transactionDto)
+        public async Task<ActionResult<TransactionReadDto>> CreateTransactionAsync([FromBody] TransactionCreateDto transactionDto)
         {
             var transaction = _autoMapper.Map<Transaction>(transactionDto);
 
