@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountModelsLib\ModelsLib.csproj" />
-    <ProjectReference Include="..\RepositoryContextLib\AppContextLib.csproj" />
+    <ProjectReference Include="..\AppContextLib\AppContextLib.csproj" />
   </ItemGroup>
 
 </Project>
