@@ -33,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccountManagerLib\AccountRepositoryLib.csproj" />
-    <ProjectReference Include="..\AccountModelsLib\AccountModelsLib.csproj" />
+    <ProjectReference Include="..\AccountRepositoryLib\AccountRepositoryLib.csproj" />
+    <ProjectReference Include="..\AccountModelsLib\ModelsLib.csproj" />
   </ItemGroup>
 
 </Project>

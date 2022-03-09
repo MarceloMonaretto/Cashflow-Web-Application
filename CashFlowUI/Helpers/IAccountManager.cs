@@ -1,4 +1,4 @@
-﻿using AccountModelsLib.Models;
+﻿using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.Helpers
 {
@@ -7,6 +7,6 @@ namespace CashFlowUI.Helpers
         Task<string> GetUserRoleAsync(string user);
         Task<bool> ValidateLoginInfoAsync(string user, string password);
 
-        Task<AccountModel> GetAccountByUserNameAsync(string userName);
+        Task<Account> GetAccountByUserNameAsync(string userName);
     }
 }

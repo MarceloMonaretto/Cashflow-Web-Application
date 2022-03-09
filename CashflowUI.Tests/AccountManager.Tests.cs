@@ -1,4 +1,4 @@
-﻿using AccountModelsLib.Models;
+﻿using ModelsLib.ContextRepositoryClasses;
 using CashFlowUI.Helpers;
 using CashFlowUI.HttpClients;
 using FluentAssertions;
@@ -69,7 +69,7 @@ namespace CashflowUI.Tests
 
             var result = await _accountManager.GetAccountByUserNameAsync(userName);
 
-            var expected = new AccountModel() { Id = 1, UserCredentialName = "manager", UserCredentialPassword = "Boss123", Role = "Manager" };
+            var expected = new Account() { Id = 1, UserName = "manager", UserPassword = "Boss123", UserRole = "Manager" };
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -90,9 +90,9 @@ namespace CashflowUI.Tests
             var sampleAccounts = GenerateAccountSamples();
 
             var accountMock = new Mock<IAccountClient>();
-            accountMock.Setup(x => x.CreateAccountAsync(It.IsAny<AccountModel>())).Returns(Task.FromResult("Created the account!"));
+            accountMock.Setup(x => x.CreateAccountAsync(It.IsAny<Account>())).Returns(Task.FromResult("Created the account!"));
             accountMock.Setup(x => x.DeleteAccountAsync(It.IsAny<int>())).Returns(Task.FromResult("Deleted the account!"));
-            accountMock.Setup(x => x.UpdateAccountAsync(It.IsAny<AccountModel>())).Returns(Task.FromResult("Updated the account!"));
+            accountMock.Setup(x => x.UpdateAccountAsync(It.IsAny<Account>())).Returns(Task.FromResult("Updated the account!"));
             accountMock.Setup(x => x.GetAccountByIdAsync(It.IsAny<int>())).Returns((int id) => Task.FromResult(sampleAccounts.FirstOrDefault(a => a.Id == id)));
             accountMock.Setup(x => x.GetAllAccountsAsync()).Returns(Task.FromResult(sampleAccounts));
 
@@ -100,13 +100,13 @@ namespace CashflowUI.Tests
         }
 
 
-        private IEnumerable<AccountModel> GenerateAccountSamples()
+        private IEnumerable<Account> GenerateAccountSamples()
         {
-            List<AccountModel> samples = new()
+            List<Account> samples = new()
             {
-                new AccountModel { Id = 1, UserCredentialName = "manager", UserCredentialPassword = "Boss123", Role = "Manager"},
-                new AccountModel { Id = 2, UserCredentialName = "employee", UserCredentialPassword = "Employee123", Role = "Employee"},
-                new AccountModel { Id = 3, UserCredentialName = "testUser", UserCredentialPassword = "testPassword", Role = "TestRole" }
+                new Account { Id = 1, UserName = "manager", UserPassword = "Boss123", UserRole = "Manager"},
+                new Account { Id = 2, UserName = "employee", UserPassword = "Employee123", UserRole = "Employee"},
+                new Account { Id = 3, UserName = "testUser", UserPassword = "testPassword", UserRole = "TestRole" }
             };
 
             return samples;

@@ -9,9 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAccountClient, AccountClient>();
+builder.Services.AddScoped<IRoleClient, RoleClient>();
 
 builder.Services.AddHttpClient<IAccountClient, AccountClient>(client => {
-    client.BaseAddress = new System.Uri("http://localhost:5000/accountapi/");
+    client.BaseAddress = new System.Uri("http://localhost:5000/cashflowapi/");
+});
+
+builder.Services.AddHttpClient<IRoleClient, RoleClient>(client =>
+{
+    client.BaseAddress = new System.Uri("http://localhost:5000/cashflowapi/");
 });
 
 builder.Services.AddAuthentication(LoginManager.LoginCookieString).AddCookie(LoginManager.LoginCookieString, options =>
@@ -21,7 +27,7 @@ builder.Services.AddAuthentication(LoginManager.LoginCookieString).AddCookie(Log
 });
 
 builder.Services.AddScoped<ILoginManager, LoginManager>();
-
+builder.Services.AddScoped<IRolesManager, RolesManager>();
 builder.Services.AddScoped<IAccountManager, AccountManager>();
 
 builder.Services.AddHttpContextAccessor();

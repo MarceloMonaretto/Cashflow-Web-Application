@@ -1,4 +1,4 @@
-﻿using AccountManagerLib.Models;
+﻿using AccountRepositoryLib.Models;
 
 namespace AccountRepository.Data
 {

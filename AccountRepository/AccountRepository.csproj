@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountInformationAPI\AccountInformationAPI.csproj" />
-    <ProjectReference Include="..\AccountManagerLib\AccountManagerLib.csproj" />
+    <ProjectReference Include="..\AccountRepositoryLib\AccountRepositoryLib.csproj" />
     <ProjectReference Include="..\CashFlowUI\CashFlowUI.csproj" />
   </ItemGroup>
 

@@ -5,10 +5,10 @@ namespace AccountInformationAPI.Dtos
     public class AccountCreateDto
     {
         [Required]
-        public string UserCredentialName { get; set; }
+        public string UserName { get; set; }
         [Required]
-        public string UserCredentialPassword { get; set; }
+        public string UserPassword { get; set; }
         [Required]
-        public string Role { get; set; }
+        public string UserRole { get; set; }
     }
 }

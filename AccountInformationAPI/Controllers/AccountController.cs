@@ -1,13 +1,13 @@
 ﻿using AccountRepositoryLib.Connection;
 using AccountInformationAPI.Dtos;
-using AccountModelsLib.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ModelsLib.ContextRepositoryClasses;
 
 namespace AccountInformationAPI.Controllers
 {
     [ApiController]
-    [Route("accountapi/[controller]")]
+    [Route("cashflowapi/[controller]")]
     public class AccountController : Controller
     {
         private readonly IMapper _autoMapper;
@@ -20,24 +20,24 @@ namespace AccountInformationAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult<AccountReadDto>> CreateCurrencyAsync([FromBody] AccountCreateDto accountDto)
+        public async Task<ActionResult<AccountReadDto>> CreateAccountAsync([FromBody] AccountCreateDto accountDto)
         {
-            var currency = _autoMapper.Map<AccountModel>(accountDto);
+            var account = _autoMapper.Map<Account>(accountDto);
 
-            if (currency == null)
+            if (account == null)
             {
                 return BadRequest(accountDto);
             }
 
-            await _accountRepositoryConnection.Repository.CreateAccountAsync(currency);
+            await _accountRepositoryConnection.Repository.CreateAccountAsync(account);
 
-            var currencyReadDto = _autoMapper.Map<AccountReadDto>(currency);
+            var accountReadDto = _autoMapper.Map<AccountReadDto>(account);
 
-            return CreatedAtAction(nameof(GetAccountByIdAsync), new { currencyReadDto.Id }, currencyReadDto);
+            return CreatedAtAction(nameof(GetAccountByIdAsync), new { accountReadDto.Id }, accountReadDto);
         }
 
         [HttpGet("All")]
-        public async Task<IEnumerable<AccountReadDto>> GetCurrenciesAsync()
+        public async Task<IEnumerable<AccountReadDto>> GetAccountsAsync()
         {
             var accounts = await _accountRepositoryConnection.Repository.GetAllAccountsAsync();
 
@@ -47,7 +47,7 @@ namespace AccountInformationAPI.Controllers
         [HttpGet("{id}"), ActionName("GetAccountByIdAsync")]
         public async Task<ActionResult<AccountReadDto>> GetAccountByIdAsync(int id)
         {
-            AccountModel account = await _accountRepositoryConnection.Repository.GetAccountByIdAsync(id);
+            Account account = await _accountRepositoryConnection.Repository.GetAccountByIdAsync(id);
 
             if (account == null)
             {
@@ -58,9 +58,9 @@ namespace AccountInformationAPI.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<ActionResult<AccountUpdateDto>> UpdateCurrencyAsync([FromBody] AccountUpdateDto accountUpdateDto, int id)
+        public async Task<ActionResult<AccountUpdateDto>> UpdateAccountAsync([FromBody] AccountUpdateDto accountUpdateDto, int id)
         {
-            AccountModel account = _autoMapper.Map<AccountModel>(accountUpdateDto);
+            Account account = _autoMapper.Map<Account>(accountUpdateDto);
 
             await _accountRepositoryConnection.Repository.UpdateAccountAsync(account, id);
 

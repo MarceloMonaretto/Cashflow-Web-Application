@@ -1,5 +1,5 @@
 ﻿using AccountInformationAPI.Data;
-using AccountManagerLib.Models;
+using AccountRepositoryLib.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccountRepository.Data

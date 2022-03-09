@@ -1,5 +1,5 @@
 ﻿using AccountInformationAPI.Dtos;
-using AccountModelsLib.Models;
+using ModelsLib.ContextRepositoryClasses;
 using AutoMapper;
 
 namespace AccountInformationAPI.Profiles
@@ -8,9 +8,9 @@ namespace AccountInformationAPI.Profiles
     {
         public AccountProfiles()
         {
-            CreateMap<AccountCreateDto, AccountModel>();
-            CreateMap<AccountModel, AccountReadDto>();
-            CreateMap<AccountUpdateDto, AccountModel>();
+            CreateMap<AccountCreateDto, Account>();
+            CreateMap<Account, AccountReadDto>();
+            CreateMap<AccountUpdateDto, Account>();
         }
     }
 }

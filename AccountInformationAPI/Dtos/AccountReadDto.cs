@@ -3,8 +3,8 @@
     public class AccountReadDto
     {
         public int Id { get; set; }
-        public string UserCredentialName { get; set; }
-        public string UserCredentialPassword { get; set; }
-        public string Role { get; set; }
+        public string UserName { get; set; }
+        public string UserPassword { get; set; }
+        public string UserRole { get; set; }
     }
 }

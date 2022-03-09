@@ -1,4 +1,4 @@
-﻿using AccountModelsLib.Models;
+﻿using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.HttpClients
 {
@@ -11,29 +11,29 @@ namespace CashFlowUI.HttpClients
             _httpClient = httpClient;
         }
 
-        public async Task CreateAccountAsync(AccountModel account)
+        public async Task CreateAccountAsync(Account account)
         {
             HttpResponseMessage result = await _httpClient.PostAsync("account/Create", JsonContent.Create(account));
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task<IEnumerable<AccountModel>> GetAllAccountsAsync()
+        public async Task<IEnumerable<Account>> GetAllAccountsAsync()
         {
             HttpResponseMessage result = await _httpClient.GetAsync("account/all");
             result.EnsureSuccessStatusCode();
 
-            return await result.Content.ReadAsAsync<IEnumerable<AccountModel>>();
+            return await result.Content.ReadAsAsync<IEnumerable<Account>>();
         }
 
-        public async Task<AccountModel> GetAccountByIdAsync(int id)
+        public async Task<Account> GetAccountByIdAsync(int id)
         {
             HttpResponseMessage result = await _httpClient.GetAsync($"account/{id}");
             result.EnsureSuccessStatusCode();
 
-            return await result.Content.ReadAsAsync<AccountModel>();
+            return await result.Content.ReadAsAsync<Account>();
         }
 
-        public async Task UpdateAccountAsync(AccountModel account)
+        public async Task UpdateAccountAsync(Account account)
         {
             var result = await _httpClient.PutAsync($"account/Update/{account.Id}", JsonContent.Create(account));
             result.EnsureSuccessStatusCode();
