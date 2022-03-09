@@ -1,4 +1,5 @@
-﻿using CashFlowUI.Models;
+﻿using CashFlowUI.Helpers;
+using CashFlowUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,13 +9,18 @@ namespace CashFlowUI.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly ITransactionManager _transactionManager;
+
+        public HomeController(ITransactionManager transactionManager)
         {
+            _transactionManager = transactionManager;
         }
 
-        public IActionResult Index()
+        [ActionName("Index")]
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var transactionsSummaryiewModel = await _transactionManager.GetSummaryOfTransactionsAsync();
+            return View("Index", transactionsSummaryiewModel);
         }
 
         public IActionResult Privacy()

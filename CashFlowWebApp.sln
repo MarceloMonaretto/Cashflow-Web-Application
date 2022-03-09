@@ -15,17 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountLibraries", "Account
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountRepositoryLib", "AccountRepositoryLib\AccountRepositoryLib.csproj", "{6514FDAE-58F6-4A26-8A9C-4AAC9BB56BF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionRepositoryLib", "TransactionRepository\TransactionRepositoryLib.csproj", "{3BAA57EA-4425-45FA-9A0D-8247B48753C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionRepositoryLib", "TransactionRepository\TransactionRepositoryLib.csproj", "{3BAA57EA-4425-45FA-9A0D-8247B48753C1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TransactionLibraries", "TransactionLibraries", "{78B2B49C-E6EF-4D99-BAA6-1DE85E98294F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GeneralLibraries", "GeneralLibraries", "{5D5EAF27-9338-4229-873E-C525B5C2D524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppContextLib", "RepositoryContextLib\AppContextLib.csproj", "{1AF2D7C3-9301-4BC3-B27B-097A407A3845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppContextLib", "RepositoryContextLib\AppContextLib.csproj", "{1AF2D7C3-9301-4BC3-B27B-097A407A3845}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RoleLibraries", "RoleLibraries", "{B0449739-A1E5-400B-9F95-4DD356135CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoleRepositoryLib", "RolePermissionRepositoryLib\RoleRepositoryLib.csproj", "{E44679B3-2F52-41D1-9E30-16AA840A9834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoleRepositoryLib", "RolePermissionRepositoryLib\RoleRepositoryLib.csproj", "{E44679B3-2F52-41D1-9E30-16AA840A9834}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulateDatabaseLib", "PopulateDatabaseLib\PopulateDatabaseLib.csproj", "{AA0B2C29-D541-44C8-9362-0B706B3D4E00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{E44679B3-2F52-41D1-9E30-16AA840A9834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E44679B3-2F52-41D1-9E30-16AA840A9834}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E44679B3-2F52-41D1-9E30-16AA840A9834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0B2C29-D541-44C8-9362-0B706B3D4E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0B2C29-D541-44C8-9362-0B706B3D4E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0B2C29-D541-44C8-9362-0B706B3D4E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0B2C29-D541-44C8-9362-0B706B3D4E00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{3BAA57EA-4425-45FA-9A0D-8247B48753C1} = {78B2B49C-E6EF-4D99-BAA6-1DE85E98294F}
 		{1AF2D7C3-9301-4BC3-B27B-097A407A3845} = {5D5EAF27-9338-4229-873E-C525B5C2D524}
 		{E44679B3-2F52-41D1-9E30-16AA840A9834} = {B0449739-A1E5-400B-9F95-4DD356135CC5}
+		{AA0B2C29-D541-44C8-9362-0B706B3D4E00} = {5D5EAF27-9338-4229-873E-C525B5C2D524}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F34AD6C1-09CF-4E21-815D-B9839F4153A0}

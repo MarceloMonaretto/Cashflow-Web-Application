@@ -15,6 +15,9 @@ namespace ModelsLib.ContextRepositoryClasses
         public string PaymentType { get; set; }
 
         [Required]
+        public double Amount { get; set; }
+
+        [Required]
         public DateTime TransactionTime { get; set; }
 
     }
