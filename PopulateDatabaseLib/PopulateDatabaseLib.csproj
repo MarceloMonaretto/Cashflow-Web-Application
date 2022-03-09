@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,13 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccountModelsLib\ModelsLib.csproj" />
     <ProjectReference Include="..\AccountRepositoryLib\AccountRepositoryLib.csproj" />
-    <ProjectReference Include="..\PopulateDatabaseLib\PopulateDatabaseLib.csproj" />
     <ProjectReference Include="..\RolePermissionRepositoryLib\RoleRepositoryLib.csproj" />
     <ProjectReference Include="..\TransactionRepository\TransactionRepositoryLib.csproj" />
   </ItemGroup>

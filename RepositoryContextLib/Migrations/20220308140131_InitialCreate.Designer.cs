@@ -4,6 +4,7 @@ using AppContextLib.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,18 +12,19 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseCreator.Migrations
 {
     [DbContext(typeof(AppContextLib.Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20220308140131_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ModelsLib.ContextRepositoryClasses.Account", b =>
+            modelBuilder.Entity("DatabaseCreator.Models.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +49,7 @@ namespace DatabaseCreator.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("ModelsLib.ContextRepositoryClasses.Role", b =>
+            modelBuilder.Entity("DatabaseCreator.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +74,7 @@ namespace DatabaseCreator.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("ModelsLib.ContextRepositoryClasses.Transaction", b =>
+            modelBuilder.Entity("DatabaseCreator.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

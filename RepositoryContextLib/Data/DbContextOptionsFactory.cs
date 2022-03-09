@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace AppContextLib.Data
 {
-    public static class DbContextOptionsFactory
+    public class DbContextOptionsFactory : IDesignTimeDbContextFactory<AppContext>
     {
-        private static readonly string _connectionString = "server=localhost;database=CashFlowDb;Trusted_Connection=True;MultipleActiveResultSets=True";
-        public static DbContextOptions CreateDbContextOptions()
+        public AppContext CreateDbContext(string[] args)
         {
-            var dbContextOptions = new DbContextOptionsBuilder();
-            dbContextOptions.UseSqlServer(_connectionString);
-            return dbContextOptions.Options;
+            var dbContextOptions = new DbContextOptionsBuilder<AppContext>();
+            dbContextOptions.UseSqlServer(args[0]);
+            return new AppContext(dbContextOptions.Options);
         }
     }
 }

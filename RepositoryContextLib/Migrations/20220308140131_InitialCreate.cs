@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AccountInformationAPI.Migrations
+namespace DatabaseCreator.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -47,6 +47,7 @@ namespace AccountInformationAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaymentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
                     TransactionTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

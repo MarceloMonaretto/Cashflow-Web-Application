@@ -5,7 +5,7 @@ namespace AppContextLib.Data
 {
     public class AppContext : DbContext , IAppContext
     {
-        public AppContext(DbContextOptions options) : base(options) { }
+        public AppContext(DbContextOptions<AppContext> options) : base(options) { }
 
         public DbSet<Account> Accounts { get; set; }
 
