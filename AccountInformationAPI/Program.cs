@@ -15,9 +15,6 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<PopulateDatabaseLib.IDatabasePopulator, PopulateDatabaseLib.DatabasePopulator>();
 
-//builder.Services.AddScoped<ITransactionRepositoryConnection, TransactionRepositoryConnection>();
-//builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
 builder.Services.AddScoped<IRoleRepositoryConnection, RoleRepositoryConnection>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
@@ -25,9 +22,6 @@ var contextBuilder = new AppContextLib.Data.DbContextOptionsFactory();
 
 builder.Services.AddScoped<IAccountRepositoryConnection, AccountRepositoryConnection>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-
-//builder.Services.AddDbContext<AppContextLib.Data.AppContext>(options =>
-//options.UseSqlServer("server=localhost;database=CashFlowDb;Trusted_Connection=True;MultipleActiveResultSets=True"));
 
 builder.Services.AddScoped<AppContextLib.Data.IAppContext, AppContextLib.Data.AppContext>((IServiceProvider serviceprovider) =>
 {
