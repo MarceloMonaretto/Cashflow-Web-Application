@@ -1,6 +1,6 @@
 using TransactionRepositoryLib.Data;
 
-namespace AccountRepositoryLib.Connection
+namespace TransactionRepositoryLib.Connection
 {
     public class TransactionRepositoryConnection : ITransactionRepositoryConnection
     {

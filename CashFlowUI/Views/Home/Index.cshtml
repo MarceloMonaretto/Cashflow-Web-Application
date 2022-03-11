@@ -1,8 +1,28 @@
-﻿@{
+﻿@model SummaryTransactionViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Welcome, <strong>@User.Identity.Name</strong></h1>
+    </div>
+    <div style="margin-top:60px">
+        <h2>Total Received</h2>
+        <table class="table table-bordered" style="margin-top:30px">
+            <thead>
+                <tr>
+                    <th class="text-center" scope="col">@Html.DisplayNameFor(m => m.TotalToday)</th>
+                    <th class="text-center" scope="col">@Html.DisplayNameFor(m => m.TotalThisMonth)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center" scope="row"><h5>@Model.TotalToday</h5></td>
+                    <td class="text-center"><h5>@Model.TotalThisMonth</h5></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>

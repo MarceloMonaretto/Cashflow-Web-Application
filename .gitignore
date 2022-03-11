@@ -36,6 +36,8 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+# Backup files
+*.orig
 
 
 # Visual Studio 2015 cache/options directory

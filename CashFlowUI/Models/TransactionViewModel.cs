@@ -1,24 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
 
-namespace ModelsLib.ContextRepositoryClasses
+namespace CashFlowUI.Models
 {
-    public class Transaction
+    public class TransactionViewModel
     {
-        [Key]
-        [Required]
         public int Id { get; set; }
 
-        [Required]
+        [DisplayName("Description")]
         public string Description { get; set; }
 
-        [Required]
+        [DisplayName("Payment Type")]
         public string PaymentType { get; set; }
 
-        [Required]
+        [DisplayName("Amount")]
         public double Amount { get; set; }
 
-        [Required]
+        [DisplayName("Transaction Time")]
         public DateTime TransactionTime { get; set; }
-
     }
 }

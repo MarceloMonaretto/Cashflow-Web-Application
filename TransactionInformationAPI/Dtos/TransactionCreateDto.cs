@@ -1,20 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TransactionModelsLib.ContextRepositoryClasses
+namespace TransactionInformationAPI.Dtos
 {
-    public class Transaction
+    public class TransactionCreateDto
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-
-        [Required]
         public string Description { get; set; }
-
-        [Required]
         public string PaymentType { get; set; }
-
-        [Required]
+        public double Amount { get; set; }
         public DateTime TransactionTime { get; set; }
 
     }
