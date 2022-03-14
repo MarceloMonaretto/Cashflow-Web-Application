@@ -1,0 +1,51 @@
+﻿@model AddTransactionViewModel
+
+<div class="container border" id="addTransactionContainer">
+    <div class="row">
+        <h3 class="pageTitle">Create a new transaction</h3>
+    </div>
+    <span id="loginErrorMessage">@ViewBag.TransactionErrorMessage</span>
+    <div class="row">
+        <section id="addTransactionForm">
+            <span style="color:green">@ViewData["AddTransaction_TransactionCreatedMessage"]</span>
+            @using (Html.BeginForm("CreateTransactionAsync", "Transaction", FormMethod.Post, new { @class = "form-horizontal", role = "form", style="text-align:left" }))
+            {
+                if (ViewBag.AddTransactionMessage is not null)
+                {
+                    <div class="formField">
+                        <span asp-validation-for="Description" class="text-danger" style="margin:10px 21%"></span>
+                    </div>
+                }
+                <div class="formField" style="margin-top:0px">
+                    <label id="transactionDescriptionLabel">@Html.DisplayNameFor(m => m.Description)</label>
+                    <textarea id="addTransactionTextArea" asp-for="Description" placeholder="Transaction description"></textarea>
+                </div>
+                <div>
+                    <span asp-validation-for="Amount" class="text-danger" style="margin: 10px 26% 0px 26%"></span>
+                </div>
+                <div class="formField" style="margin-top:0px">
+                    @Html.LabelFor(m => m.Amount, new {@class = "col-3"})
+                    <input asp-for="Amount" placeholder="Transaction amount">
+                </div>
+                <div class="formField">
+                    @Html.LabelFor(m => m.PaymentType, new {@class = "col-3"})
+                    <span asp-validation-for="@Model.PaymentType" class="text-danger"></span>
+                    @{
+                        var moneyType = new SelectListItem("Money", "Money");
+                        var creditCardType = new SelectListItem("Credit Card", "Credit Card");
+
+                        List<SelectListItem> items = new() { { moneyType }, { creditCardType } };
+
+                        ViewData["PaymentTypes"] = items;
+                    }
+                    @Html.DropDownListFor(x => x.PaymentType , items, null, new { @class="col-3" })
+                </div>
+                <div class="formField">
+                    <div class="col-md-10 col-md-offset-2">
+                        <input type="submit" class="btn btn-success" value="Create!" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>

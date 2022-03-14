@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CashFlowUI.styles.css" asp-append-version="true" />
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <header>
@@ -31,13 +32,13 @@
                             @if (await rolesManager.VerifyRoleMenuPermissionAsync(userRole, "Add Transaction"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Broken Controller Link" asp-action="Privacy">Add Transaction</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="AddTransaction">Add Transaction</a>
                                 </li>
                             }
                             @if (await rolesManager.VerifyRoleMenuPermissionAsync(userRole, "Transaction List"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Broken Controller Link" asp-action="Privacy">Transaction List</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="TransactionListPage">Transaction List</a>
                                 </li>
                             }
                         }
@@ -60,7 +61,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" id="mainTag">
             @RenderBody()
         </main>
     </div>

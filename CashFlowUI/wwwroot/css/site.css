@@ -18,13 +18,16 @@ body {
 }
 
 .container {
-    width: 500px;
+    width: auto;
     margin: 0 auto;
+    text-align: center;
 }
 
-.loginTitle {
-    margin: 30px 30px auto;
+.pageTitle {
+    margin: auto;
+    width: 100%;
     text-transform: uppercase;
+    text-align:center;
 }
 
 #loginErrorMessage{
@@ -83,4 +86,21 @@ body {
     border-style: hidden;
     margin-top: 20px;
     margin-left: 189px;
+}
+
+#addTransactionContainer{
+    padding: 20px;
+    width:460px;
+    margin:2px auto;
+}
+
+#transactionDescriptionLabel {
+    text-align: center;
+    width: 20%;
+    vertical-align: top;
+}
+
+#addTransactionTextArea {
+    width: 78%;
+    height: 30px;
 }

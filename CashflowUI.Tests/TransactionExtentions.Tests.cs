@@ -11,18 +11,17 @@ using System.Threading.Tasks;
 using Xunit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using CashFlowUI.Extensions;
 
 namespace CashflowUI.Tests
 {
-    public class TransactionManagerTests
+    public class TransactionExtentionsTests
     {
-        private readonly ITransactionManager _transactionManager;
         private readonly IEnumerable<Transaction> _transactionSamples;
 
-        public TransactionManagerTests()
+        public TransactionExtentionsTests()
         {
             _transactionSamples = GenerateTransactionSamples();
-            _transactionManager = new TransactionManager(MockTransactionClient().Object);
         }
 
         [Theory]
@@ -31,7 +30,7 @@ namespace CashflowUI.Tests
         [InlineData(1, 1)]
         [InlineData(2, 23)]
         [InlineData(15, 30)]
-        public async Task GetTransactionsInInterval_IntervalHasTransaction_ShouldReturnTransactions(
+        public void GetTransactionsInInterval_IntervalHasTransaction_ShouldReturnTransactions(
             int expectedFirstTransaction, int expectedLastTransaction)
         {
             var expectedTransactions = _transactionSamples
@@ -46,20 +45,20 @@ namespace CashflowUI.Tests
                 .Take(expectedLastTransaction - expectedFirstTransaction + 1)
                 .LastOrDefault().TransactionTime;
 
-            var result = await _transactionManager.GetTransactionsInInterval(startDate, endDate);
+            var result = _transactionSamples.FilterByDateInInterval(startDate, endDate);
 
             result.Should().BeEquivalentTo(expectedTransactions);
         }
 
 
         [Fact]
-        public async Task GetTransactionsInInterval_IntervalHasNoTransaction_ShouldReturnNull()
+        public void GetTransactionsInInterval_IntervalHasNoTransaction_ShouldReturnNull()
         {
             var startDate = new DateTime(5000, 1, 1);
 
             var endDate = new DateTime(5000, 1, 2);
 
-            var result = await _transactionManager.GetTransactionsInInterval(startDate, endDate);
+            var result = _transactionSamples.FilterByDateInInterval(startDate, endDate);
 
             result.Should().BeEmpty();
         }

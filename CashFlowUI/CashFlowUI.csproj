@@ -13,6 +13,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DataTables-Editor-Server" Version="2.0.6" />
+    <PackageReference Include="datatables.net-autofill-bs5" Version="2.3.9" />
+    <PackageReference Include="datatables.net-bs5" Version="1.11.5" />
+    <PackageReference Include="datatables.net-buttons-bs5" Version="2.2.2" />
+    <PackageReference Include="datatables.net-colreorder-bs5" Version="1.5.5" />
+    <PackageReference Include="datatables.net-datetime" Version="1.1.2" />
+    <PackageReference Include="datatables.net-fixedcolumns-bs5" Version="4.0.2" />
+    <PackageReference Include="datatables.net-fixedheader-bs5" Version="3.2.2" />
+    <PackageReference Include="datatables.net-keytable-bs5" Version="2.6.4" />
+    <PackageReference Include="datatables.net-rowgroup-bs5" Version="1.1.4" />
+    <PackageReference Include="datatables.net-scroller-bs5" Version="2.0.5" />
+    <PackageReference Include="datatables.net-searchbuilder-bs5" Version="1.3.2" />
+    <PackageReference Include="datatables.net-searchpanes-bs5" Version="2.0.0" />
+    <PackageReference Include="datatables.net-select-bs5" Version="1.3.4" />
+    <PackageReference Include="jszip" Version="3.7.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.3" />
@@ -25,6 +40,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
     <PackageReference Include="Moq" Version="4.17.2" />
+    <PackageReference Include="pdfmake" Version="0.1.18" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
     <PackageReference Include="xunit.core" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>

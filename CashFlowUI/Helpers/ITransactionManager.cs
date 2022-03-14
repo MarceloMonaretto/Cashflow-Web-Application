@@ -7,7 +7,9 @@ namespace CashFlowUI.Helpers
     {
         Task<IEnumerable<Transaction>> GetAllTransactionsAsync();
         double GetSumOfAllAmounts(IEnumerable<Transaction> transactions);
-        Task<IEnumerable<Transaction>> GetTransactionsInInterval(DateTime start, DateTime end);
         Task<SummaryTransactionViewModel> GetSummaryOfTransactionsAsync();
+        Task CreateTransaction(Transaction transaction);
+        (List<Transaction>, bool) FilterTransactions(List<Transaction> transactions, HttpRequest request);
+        Task DeleteTransactionAsync(int id);
     }
 }
