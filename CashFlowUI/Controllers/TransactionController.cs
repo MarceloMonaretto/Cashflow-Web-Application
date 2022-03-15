@@ -12,10 +12,12 @@ namespace CashFlowUI.Controllers
     public class TransactionController : Controller
     {
         private readonly ITransactionManager _transactionManager;
+        private readonly ITransactionsTableManager _transactionsTableManager;
 
-        public TransactionController(ITransactionManager transactionManager)
+        public TransactionController(ITransactionManager transactionManager, ITransactionsTableManager transactionsTableManager)
         {
             _transactionManager = transactionManager;
+            _transactionsTableManager = transactionsTableManager;
         }
         // GET: AddTransactionController
         public ActionResult AddTransaction(string message = null)
@@ -33,7 +35,7 @@ namespace CashFlowUI.Controllers
                 return View("AddTransaction", addTransactionViewModel);
             }
 
-            await _transactionManager.CreateTransaction(addTransactionViewModel.ToTransactionModel());
+            await _transactionManager.CreateTransactionAsync(addTransactionViewModel.ToTransactionModel());
 
             return RedirectToAction("AddTransaction", new { message = "Transaction Created!" });
         }
@@ -43,6 +45,7 @@ namespace CashFlowUI.Controllers
         {
             return View("TransactionList");
         }
+
         [HttpDelete]
         [ActionName("DeleteTransactionById")]
         public async Task<IActionResult> DeleteTransactionByIdAsync(int id)
@@ -55,52 +58,35 @@ namespace CashFlowUI.Controllers
         [ActionName("GetTransactionList")]
         public async Task<IActionResult> GetTransactionList()
         {
-            var start = Convert.ToInt32(Request.Form["start"]);
-            var length = Convert.ToInt32(Request.Form["length"]);
-            var searchValue = (Request.Form["search[value]"]);
-            var columnIndex = (Request.Form["order[0][column]"]);
-            var columnName = (Request.Form[$"columns[{columnIndex}][data]"]).ToString();
-            var sortDirection = (Request.Form["order[0][dir]"]);
+            var requestFormData = Request.Form;
+            var start = Convert.ToInt32(requestFormData["start"]);
+            var length = Convert.ToInt32(requestFormData["length"]);
+            var searchValue = requestFormData["search[value]"];
+            var columnIndex = requestFormData["order[0][column]"];
+            var columnName = requestFormData[$"columns[{columnIndex}][data]"].ToString();
+            var sortDirection = requestFormData["order[0][dir]"];
+            var formDraw = requestFormData["draw"];
+            var searchBuilderFilters = requestFormData.Where(d => d.Key.Contains("searchBuilder"));
 
-            var transactionList = (await _transactionManager.GetAllTransactionsAsync()).ToList();
-            var wasFiltered = false;
+            var allTransactions = await _transactionManager.GetAllTransactionsAsync();
+            List<Transaction> filteredTransactionList = _transactionsTableManager.FilterTransactions(
+                allTransactions.ToList(), searchBuilderFilters);
+
+            filteredTransactionList = _transactionsTableManager.SearchForText(filteredTransactionList, searchValue);
             int totalRecords;
-            List<Transaction> filteredTransactionList;
-
-            (filteredTransactionList, wasFiltered) = _transactionManager.FilterTransactions(transactionList, Request);
-            
-
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-                filteredTransactionList = filteredTransactionList.
-                    Where(x => x.Description.ToLower().Contains(searchValue.ToString().ToLower()) ||
-                    x.PaymentType.ToLower().Contains(searchValue.ToString().ToLower())).ToList();
-            }
-            
-            if (length > 0)
-            {
-                filteredTransactionList = filteredTransactionList.Skip(start).Take(length).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(columnName))
-                filteredTransactionList = filteredTransactionList.AsQueryable().OrderBy(columnName + " " + sortDirection).ToList();
-
+            bool wasFiltered = !allTransactions.SequenceEqual(filteredTransactionList);
             if (wasFiltered)
             {
                 totalRecords = filteredTransactionList.Count;
             }
             else
             {
-                totalRecords = transactionList.Count;
+                totalRecords = allTransactions.Count();
             }
-
-            dynamic response = new
-            {
-                Data = filteredTransactionList,
-                Draw = Request.Form["draw"],
-                RecordsFiltered = totalRecords,
-                RecordsTotal = filteredTransactionList.Count()
-            };
+            filteredTransactionList = _transactionsTableManager.MakePagination(filteredTransactionList, start, length);
+            filteredTransactionList = _transactionsTableManager.SortData(filteredTransactionList, columnName, sortDirection);
+            dynamic response = _transactionsTableManager.CreateUpdatedTableConfiguration(allTransactions.ToList(),
+                filteredTransactionList, formDraw, totalRecords);
 
             return Json(response);
         }

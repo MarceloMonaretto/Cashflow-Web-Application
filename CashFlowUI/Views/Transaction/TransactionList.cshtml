@@ -1,8 +1,11 @@
 ﻿@using CashFlowUI.Helpers
+
 @inject IRolesManager rolesManager
 @{
     ViewBag.Title = "Transaction List";
 }
+
+
 
 <h2>Transaction List</h2>
 
@@ -11,10 +14,23 @@
     var userRole = rolesManager.GetUserRoleFromClaims();
     @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, "DeleteTransactionCommand"))
     {
-        <div style="text-align:left;width:100%;display:inline-block">
-            <button id="deleteTransactionButton" class="btn btn-primary">Delete Transaction</button>
-        </div>
+        <label id="userHasAccessToDeleteCommand" style="display:none">true</label>
     }
+    else
+    {
+        <label id="userHasAccessToDeleteCommand"  style="display:none">false</label>
+    }
+
+    @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, "EditTransactionCommand"))
+    {
+        <label id="userHasAccessToEditCommand"  style="display:none">true</label>
+    }
+    else
+    {
+        <label id="userHasAccessToEditCommand"  style="display:none">false</label>
+    }
+
+    
 
     <div id="areYouSureButton" style="text-align:left;width:100%;display:inline-block" hidden>
         <button class="btn btn-danger">Are you sure?</button>
@@ -28,6 +44,7 @@
             <th>Payment Type</th>
             <th>Description</th>
             <th>Date</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tfoot>
@@ -37,6 +54,7 @@
             <th>Payment Type</th>
             <th>Description</th>
             <th>Date</th>
+            <th>Actions</th>
         </tr>
     </tfoot>
 </table>
@@ -56,75 +74,139 @@
 <script>
     
     $(document).ready(function ($){
-        var transactionId;
-        var table = $("#TransactionTable")
+        var transactionId = '0';
+        var hasAccessToDeleteCommand = $('#userHasAccessToDeleteCommand').text() == 'true';
+        var hasAccessToEditCommand = $('#userHasAccessToEditCommand').text() == 'true';
+
+        var table = $('#TransactionTable')
         .DataTable({
-            "dom": "Qlfrtip",
-            "searchBuilder": {
-                "depthLimit": 1,
-                "columns": [2,4]
-             },
-            "ajax":{
-                "url":"/Transaction/GetTransactionList",
-                "type":"POST"
-            },
-            "columns":[
-                {"data":"id"},
-                {"data":"amount"},
-                {"data":"paymentType"},
-                {"data":"description"},
-                {"data":"transactionTime"}
-            ],
-            "columnDefs": [
-              { "type": "date", "targets": 4 }
-            ],
-            "conditions": {
-              "date": {
-                  "!null": null,
-                  "null": null
+            dom: 'Qlfrtip',
+            searchBuilder: {
+                depthLimit: 1,
+                columns: [2,4],
+                conditions: {
+              date: {
+                  '!null': null,
+                  'null': null
+               },
+              string: {
+                  '!null': null,'null': null,'starts': null,'!starts':null, 'contains':null,
+                  '!contains':null,'ends':null,'!ends':null,'empty':null,'!empty':null,
+                  '!=':{
+                      conditionName: 'Different than'
+                  }
                }
             },
-            "processing": true,
-            "serverSide":true,
-            "ordering":true,
-            "paging":true,
-            "pagingType":"full_numbers",
-            "pageLength": 10,
-        });
-
-        $('#deleteTransactionButton').click(function () {
-            if(transactionId != "0"){
-                $("#areYouSureButton").removeAttr('hidden');
-            }            
-        });
-
-        $('#areYouSureButton').click(function () {
-            if(transactionId != "0"){
-                $.ajax({
-                    "url":"/Transaction/DeleteTransactionById",
-                    "type":"DELETE",
-                    "data": {"id": transactionId },
-                    "success": function(){
-                        $("#TransactionTable").DataTable().row('.selected').remove().draw( false );
+             },
+            ajax:{
+                url:'/Transaction/GetTransactionList',
+                type:'POST',
+                dataSrc: function(json){
+                    return json.data;
+                }
+            },
+            columns:[
+                { data:'id'},
+                { data:'amount'},
+                { data:'paymentType'},
+                { data:'description'},
+                { data:'transactionTime'},
+                {
+                    defaultContent: '<input type="button" class="btn btn-danger deleteTransactionButton" value="Delete" disabled/><input type="button" class="btn btn-success editTransactionButton" value="Edit" disabled/>'
+                }
+            ],
+            columnDefs: [
+                { 'type': 'num', 'targets': 0 },
+                { 'type': 'string', 'targets': 1 },
+                { 'type': 'string', 'targets': 2 },
+                { 'type': 'string', 'targets': 3 },
+                { 'type': 'date', 'targets': 4 }
+            ],
+            processing: true,
+            serverSide:true,
+            ordering:true,
+            paging:true,
+            pagingType:'full_numbers',
+            pageLength: 10,
+            initComplete: function(){
+                setInterval(function () {
+                    if(hasAccessToDeleteCommand){
+                        console.log('user has access to delete command');
+                        $('.deleteTransactionButton').attr("disabled", false);
                     }
+                    if(hasAccessToEditCommand){
+                        $('.editTransactionButton').attr("disabled", false);
+                    }
+                    clearInterval(this);
+                },1000);
+           }
+        });        
+
+        $('#TransactionTable tbody').on( 'click', '.deleteTransactionButtons', function () {
+            $(this).focusout(function(){
+                    $(this).val('Delete');
                 });
-                $("#areYouSureButton").attr('hidden', true);
-            }            
+            if($(this).val() == 'Delete'){
+                $(this).val('Are you sure?');
+                transactionId = table.row( $(this).parents('tr') ).data()['id'];
+                return;
+            }
+            else{
+                if(transactionId != '0'){
+                    $.ajax({
+                        url:'/Transaction/DeleteTransactionById',
+                        type:'DELETE',
+                        data: {'id': transactionId },
+                        success: function(){
+                            $('#TransactionTable').DataTable().row('.selected').remove().draw( false );
+                        }
+                    });
+                    transactionId = '0';
+                }
+            }        
         });
 
-        $('#TransactionTable tbody').on( 'click', 'tr', function () {
-            
-            if ( $(this).hasClass('selected') ) {
-                $(this).removeClass('selected');
-                transactionId = "0";
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-                transactionId = table.row('.selected').data()["id"];
-                
-            }
+        $('#editTransactionButton tbody').on( 'click', '.deleteTransactionButtons', function () {
+                               
         });
+
+
+        //$('#areYouSureButton').click(function () {
+        //    if(transactionId != '0'){
+        //        $.ajax({
+        //            url:'/Transaction/DeleteTransactionById',
+        //            type:'DELETE',
+        //            data: {'id': transactionId },
+        //            success: function(){
+        //                $('#TransactionTable').DataTable().row('.selected').remove().draw( false );
+        //            }
+        //        });
+        //        $('#areYouSureButton').attr('hidden', true);
+        //    }            
+        //});
+
+        //$('#deleteTransactionButton').click(function () {
+        //    if(transactionId != '0'){
+        //        $('#areYouSureButton').removeAttr('hidden');
+        //    }            
+        //});
+
+
+        //$('#TransactionTable tbody').on( 'click', 'tr', function () {
+            
+        //    if ( $(this).hasClass('selected') ) {
+        //        $(this).removeClass('selected');
+        //        transactionId = '0';
+        //    }
+        //    else {
+        //        table.$('tr.selected').removeClass('selected');
+        //        $(this).addClass('selected');
+        //        transactionId = table.row('.selected').data()['id'];
+                
+        //    }
+        //});
+
+        
 
         
     });
