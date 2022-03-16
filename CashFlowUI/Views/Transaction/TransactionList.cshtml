@@ -24,7 +24,7 @@
                 </div>
                 <div><span id="validationForPaymentType" class="text-danger"></span></div>
                 <div style="margin-top: 10px;">
-                    <label style="padding-right: 33px;">Payment Type</label>                    
+                    <label style="padding-right: 33px;">Payment Type</label>
                     @{
                         var moneyType = new SelectListItem("Money", "Money");
                         var creditCardType = new SelectListItem("Credit Card", "Credit Card");
@@ -42,11 +42,11 @@
                     <label style="padding-right: 14px;">Transaction Date</label>
                     <input type="text" id="transactionTimeInput" disabled />
                 </div>
-               
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-primary" id="closeModalButton">Close</button>
-                <button type="button" class="btn-primary" id="saveModalContent">Save</button>
+                <button type="button" class="btn-primary" id="saveModalButton">Save</button>
             </div>
         </div>
     </div>
@@ -137,19 +137,19 @@
                 depthLimit: 1,
                 columns: [2,4],
                 conditions: {
-              date: {
-                  '!null': null,
-                  'null': null
-               },
-              string: {
-                  '!null': null,'null': null,'starts': null,'!starts':null, 'contains':null,
-                  '!contains':null,'ends':null,'!ends':null,'empty':null,'!empty':null,
-                  '!=':{
-                      conditionName: 'Different than'
-                  }
-               }
+                    date: {
+                        '!null': null,
+                        'null': null
+                    },
+                    string: {
+                        '!null': null,'null': null,'starts': null,'!starts':null, 'contains':null,
+                        '!contains':null,'ends':null,'!ends':null,'empty':null,'!empty':null,
+                        '!=':{
+                            conditionName: 'Different than'
+                        }
+                    }
+                },
             },
-             },
             ajax:{
                 url:'/Transaction/GetTransactionList',
                 type:'POST',
@@ -165,7 +165,7 @@
                 { data:'description'},
                 { data:'transactionTime'},
                 {
-                    defaultContent: '<input type="button" class="btn btn-danger deleteTransactionButton" value="Delete" disabled/><input type="button" class="btn btn-success editTransactionButton" value="Edit" data-toggle="modal" data-target="#editTransactionModal" disabled/>'
+                    defaultContent: createDeleteAndEditButtons()
                 }
             ],
             columnDefs: [
@@ -173,8 +173,8 @@
                 { 'type': 'string', 'targets': 1 },
                 { 'type': 'string', 'targets': 2 },
                 { 'type': 'string', 'targets': 3 },
-                { 
-                    type: 'date', 
+                {
+                    type: 'date',
                     targets: 4,
                     render:function(data){
                         return moment(data).format('DD/MM/YYYY HH:MM:SS');
@@ -189,60 +189,61 @@
             pageLength: 10
         });
 
-        deleteButtonEvent = $('#TransactionTable tbody').on( 'click', '.deleteTransactionButton', function () {
-            $(this).focusout(function(){
-                    $(this).val('Delete');
-                });
-            if($(this).val() == 'Delete'){
-                $(this).val('Are you sure?');
-                transactionId = table.row( $(this).parents('tr') ).data()['id'];
-                return;
-            }
-            else{
-                if(transactionId != '0'){
-                    $.ajax({
-                        url:'/Transaction/DeleteTransactionById',
-                        type:'DELETE',
-                        data: {'id': transactionId },
-                        success: function(){
-                            $('#TransactionTable').DataTable().row('.selected').remove().draw( false );
-                        }
-                    });
-                    transactionId = '0';
-                }
-            }
-        });
-
-        editButtonEvent = $('#TransactionTable tbody').on( 'click', '.editTransactionButton', function () {
-            $('#editTransactionModal').modal('show');
-            rowData = table.row( $(this).parents('tr')).data();
-            rowIndex = table.row( $(this).parents('tr')).index();
-            $('#transactionIdInput').val(rowData['id']);
-            $('#transactionDescriptionInput').val(rowData['description']);
-            $('#transactionpaymentTypeInput').val(rowData['paymentType']);
-            $('#transactionAmountInput').val(rowData['amount']);
-            $('#transactionTimeInput').val($.format.date(rowData['transactionTime'], "dd/MM/yyyy HH:mm:ss"));
-        });
-
+        function createDeleteAndEditButtons() {
+            return ('<input type="button" class="btn btn-danger deleteTransactionButton" value="Delete" disabled/>'
+                    +  '<input type="button" class="btn btn-success editTransactionButton" value="Edit" disabled/> ');
+        }
 
         setupDeleteButton = function(){
-                    if(hasAccessToDeleteCommand){
-                        $('.deleteTransactionButton').attr("disabled", false);
-                        deleteButtonEvent;
-                    }                    
-        };
-        setupEditButton = function(){
-                    if(hasAccessToEditCommand){
-                        $('.editTransactionButton').attr("disabled", false);
+            if(hasAccessToDeleteCommand){
+                $('.deleteTransactionButton').attr("disabled", false);
+                    $('#TransactionTable tbody').on('click', '.deleteTransactionButton', function (table, transactionId) {
+                    $(this).focusout(function () {
+                        $(this).val('Delete');
+                    });
+                    if ($(this).val() == 'Delete') {
+                        $(this).val('Are you sure?');
+                        transactionId = table.row($(this).parents('tr')).data()['id'];
+                        return;
                     }
-                    editButtonEvent;
+                    else {
+                        if (transactionId != '0') {
+                            $.ajax({
+                                url: '/Transaction/DeleteTransactionById',
+                                type: 'DELETE',
+                                data: { 'id': transactionId },
+                                success: function () {
+                                    $('#TransactionTable').DataTable().row('.selected').remove().draw(false);
+                                }
+                            });
+                        transactionId = '0';
+                        }
+                    }
+                });
+            }
         };
 
-        $('#closeModalButton').click(function(){
+        setupEditButton = function(){
+            if(hasAccessToEditCommand){
+                $('.editTransactionButton').attr("disabled", false);
+                $('#TransactionTable tbody').on( 'click', '.editTransactionButton', function () {
+                    $('#editTransactionModal').modal('show');
+                    rowData = table.row( $(this).parents('tr')).data();
+                    rowIndex = table.row( $(this).parents('tr')).index();
+                    $('#transactionIdInput').val(rowData['id']);
+                    $('#transactionDescriptionInput').val(rowData['description']);
+                    $('#transactionpaymentTypeInput').val(rowData['paymentType']);
+                    $('#transactionAmountInput').val(rowData['amount']);
+                    $('#transactionTimeInput').val($.format.date(rowData['transactionTime'], "dd/MM/yyyy HH:mm:ss"));
+                });
+            }
+        };
+
+        setupCloseModalButton = $('#closeModalButton').click(function(){
             $('#editTransactionModal').modal('hide');
         });
 
-        $('#saveModalContent').click(function(){
+        setupSaveModalButton = $('#saveModalButton').click(function(){
             var id = $('#transactionIdInput').val();
             var description = $('#transactionDescriptionInput').val();
             var paymentType = $('#transactionpaymentTypeInput').val();
@@ -250,27 +251,20 @@
             var transactionTime = rowData['transactionTime'];
             var isThereInvalidData = false;
 
-            console.log(amount);
-            console.log(paymentType);
-
             if(paymentType != 'Credit Card' && paymentType != 'Money'){
                 isThereInvalidData = true;
                 $('#validationForPaymentType').text('Invalid Payment Type!');
-            }
-            else{
+            }else{
                 $('#validationForPaymentType').text('');
             }
             if (isNaN(amount)){
                 isThereInvalidData = true;
                 $('#validationForAmount').text('Invalid Amount!');
-            }
-            else{
+            }else{
                 $('#validationForAmount').text('');
             }
 
-            if(isThereInvalidData){
-                return;
-            }
+            if(isThereInvalidData){ return; }
 
             $.ajax({
                 url:'/Transaction/UpdateTransactionById',
@@ -284,13 +278,15 @@
                     rowData['amount'] = amount;
                     rowData['transactionTime'] = transactionTime;
 
-                    table.row(rowIndex).data(rowData).draw();
+                    table.row(rowIndex).data(rowData).draw(false);
+                    $('#editTransactionModal').modal('hide');
                 },
                 error:function(data){
-                
+
                 }
             });
         });
     });
+
 </script>
 }
