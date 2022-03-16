@@ -11,5 +11,6 @@ namespace CashFlowUI.Helpers
         Task<SummaryTransactionViewModel> GetSummaryOfTransactionsAsync();
         Task CreateTransactionAsync(Transaction transaction);
         Task DeleteTransactionAsync(int id);
+        Task UpdateTransactionAsync(Transaction transaction);
     }
 }

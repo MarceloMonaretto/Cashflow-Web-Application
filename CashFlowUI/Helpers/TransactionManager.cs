@@ -52,5 +52,10 @@ namespace CashFlowUI.Helpers
         {
             await _transactionClient.DeleteTransactionAsync(id);
         }
+
+        public async Task UpdateTransactionAsync(Transaction transaction)
+        {
+            await _transactionClient.UpdateTransactionAsync(transaction);
+        }
     }
 }

@@ -54,6 +54,14 @@ namespace CashFlowUI.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        [ActionName("UpdateTransactionById")]
+        public async Task<IActionResult> UpdateTransactionByIdAsync(Transaction transaction)
+        {
+            await _transactionManager.UpdateTransactionAsync(transaction);
+            return NoContent();
+        }
+
         [HttpPost]
         [ActionName("GetTransactionList")]
         public async Task<IActionResult> GetTransactionList()
