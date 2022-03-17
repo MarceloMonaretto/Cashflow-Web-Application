@@ -29,3 +29,41 @@ body {
     text-transform: uppercase;
     text-align:center;
 }
+
+.loginButtonHeader {
+    background-color: dodgerblue;
+    color: white;
+    font-size: 16px;
+    border: solid;
+    border-color:dodgerblue;
+    border-radius:5px;
+    padding: 4px;
+    text-align:center;
+    vertical-align:central;
+    text-decoration:none;
+}
+
+.loginButtonHeader:hover{
+    padding: 12px;
+    font-size: 20px;
+    color:white;
+}
+
+.logoutButtonHeader {
+    background-color: orange;
+    color: white;
+    font-size: 16px;
+    border: solid;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 4px;
+    text-align: center;
+    vertical-align: central;
+    text-decoration: none;
+}
+
+.logoutButtonHeader:hover {
+    padding: 12px;
+    font-size: 20px;
+    color: white;
+}

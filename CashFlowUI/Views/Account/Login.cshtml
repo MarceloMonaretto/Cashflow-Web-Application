@@ -11,7 +11,8 @@
 
     <h3 class="pageTitle">Login in the system</h3>
 
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, null, new { @class = "", id= "loginPageForm", role = "form" }))
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
+    null, new { @class = "", id= "loginPageForm", role = "form" }))
     {
         <span asp-validation-for="User" class="loginPageSpan"></span>
         <div>
