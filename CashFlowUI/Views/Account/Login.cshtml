@@ -7,39 +7,32 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
-<h1>Login</h1>
+<div id="loginPageBorderDiv">
 
-<div class="container border" style="padding:20px">
-    <div class="row">
-        <h3 class="pageTitle">Login in the system</h3>
-    </div>
-    <span id="loginErrorMessage">@ViewBag.LoginErrorMessage</span>
-    <div class="row">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, null, new { @class = "form-horizontal", role = "form" }))
-            {
-                <div class="formField">
-                    @Html.LabelFor(m => m.User, new {@class = "col-3"})
-                    <span asp-validation-for="User" class="text-danger"></span>
-                    @Html.TextBoxFor(m => m.User, new { @class="col-5" })
-                </div>
-                <div class="formField">
-                    @Html.LabelFor(m => m.Password, new {@class = "col-3"})
-                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                    @Html.PasswordFor(m => m.Password, new { @class="col-5" })
-                </div>
-                <div id="rememberMeButton">
-                    <div class="col-md-10 col-md-offset-2">
-                        @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)
-                    </div>
-                </div>
-                <div class="formField">
-                    <div class="col-md-10 col-md-offset-2">
-                        <input type="submit" class="btn btn-success" value="Login" />
-                    </div>
-                </div>
-            }
-        </section>
-    </div>
+    <h3 class="pageTitle">Login in the system</h3>
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, null, new { @class = "", id= "loginPageForm", role = "form" }))
+    {
+        <span asp-validation-for="User" class="loginPageSpan"></span>
+        <div>
+            @Html.LabelFor(m => m.User, new { @class="loginPageLabel"} )
+            @Html.TextBoxFor(m => m.User, new { @class="loginPageField" })
+        </div>
+        <span asp-validation-for="@Model.Password" class="loginPageSpan"></span>
+        <div>
+            @Html.LabelFor(m => m.Password, new { @class="loginPageLabel"} )
+            @Html.PasswordFor(m => m.Password, new { @class="loginPageField" })
+        </div>
+        <div id="rememberMeDiv">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </div>
+
+        <input type="submit" class="btn btn-success" id="loginButton" value="Login" />
+    }
 </div>
+
+
+@section styles{
+<link rel="stylesheet" type="text/css" href="~/css/LoginPage.css" />
+}

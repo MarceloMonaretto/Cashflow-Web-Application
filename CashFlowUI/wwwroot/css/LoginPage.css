@@ -1,0 +1,56 @@
+﻿#loginPageBorderDiv{
+    border:solid;
+    border-width: 2px;
+    border-color: lightgrey;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+#loginPageForm{
+    width:auto;
+    text-align:left;
+}
+
+.loginPageSpan {
+    margin-top: 20px;
+    width: auto;
+    margin-left: 33%;
+    color: red;
+    display: inline-block;
+}
+
+.loginPageLabel {
+    margin-left: 15%;
+    margin-right: 2%;
+    width: 15%;
+    vertical-align: top;
+    display: inline-block;
+    text-align:right;
+}
+
+.loginPageField{
+    width:50%;
+    display:inline-block;
+}
+
+
+#loginErrorMessage {
+    color: red;
+}
+
+#rememberMeDiv{
+    text-align: right;
+    margin-right: 18%;
+    width:auto;
+    margin-top: 10px;
+}
+
+#loginButton{
+    margin-top: 10px;
+    display:inline-block;
+    position:relative;
+    left:80%;;
+}

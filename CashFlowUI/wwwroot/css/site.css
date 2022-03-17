@@ -24,83 +24,8 @@ body {
 }
 
 .pageTitle {
-    margin: auto;
+    margin: 15px auto;
     width: 100%;
     text-transform: uppercase;
     text-align:center;
-}
-
-#loginErrorMessage{
-    color: red;
-}
-
-#userLabel{
-    margin: 50px 7px auto;
-}
-
-#loginButton{
-    margin-bottom: 10px;
-}
-
-.loginButtonHeader {
-    margin-right: 40px;
-    background-color: red;
-    color: white;
-    padding: 1em 1.5em;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius:10px;
-    border-style:solid;
-    border-color: red;
-}
-
-.loginButtonHeader:hover{
-    color: black;
-    font-size:20px;
-}
-
-.logoutButtonHeader {
-    margin-right: 40px;
-    background-color: dodgerblue;
-    color: white;
-    padding: 1em 1.5em;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: dodgerblue;
-}
-
-.logoutButtonHeader:hover {
-    color: black;
-    font-size: 20px;
-}
-
-
-.formField {
-    border-style: hidden;
-    margin-top: 20px;
-}
-
-#rememberMeButton {
-    border-style: hidden;
-    margin-top: 20px;
-    margin-left: 189px;
-}
-
-#addTransactionContainer{
-    padding: 20px;
-    width:460px;
-    margin:2px auto;
-}
-
-#transactionDescriptionLabel {
-    text-align: center;
-    width: 20%;
-    vertical-align: top;
-}
-
-#addTransactionTextArea {
-    width: 78%;
-    height: 30px;
 }

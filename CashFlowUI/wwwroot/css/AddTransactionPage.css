@@ -1,0 +1,20 @@
+﻿.addTransactionSpan {
+    margin-top: 10px;
+    width: auto;
+    margin-left: 22%;
+    color: red;
+    display: inline-block;
+}
+
+.addTransactionLabel {
+    display: inline-block;
+    width: 21%;
+    vertical-align: top;
+}
+
+#createTransactionButton {
+    display: inline-block;
+    margin: 10px auto;
+    width: 100%;
+    text-align: right;
+}

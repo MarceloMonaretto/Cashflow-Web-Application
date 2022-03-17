@@ -1,0 +1,11 @@
+﻿.editTransactionSpanDiv {
+    margin-top: 10px;
+    width: auto;
+    margin-left: 29%;
+}
+
+.editTransactionLabel {
+    width: 28%;
+    vertical-align: top;
+    display: inline-block;
+}

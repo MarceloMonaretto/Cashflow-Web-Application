@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoleRepositoryLib", "RoleRe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopulateDatabaseLib", "PopulateDatabaseLib\PopulateDatabaseLib.csproj", "{AA0B2C29-D541-44C8-9362-0B706B3D4E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionInformationAPI", "TransactionInformationAPI\TransactionInformationAPI.csproj", "{C8A85DD4-3F1E-4E09-A666-19B7AD5BFDF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionInformationAPI", "TransactionInformationAPI\TransactionInformationAPI.csproj", "{C8A85DD4-3F1E-4E09-A666-19B7AD5BFDF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{4676E87B-3C47-48C5-9F65-8E94F2CDF0D0}"
 EndProject

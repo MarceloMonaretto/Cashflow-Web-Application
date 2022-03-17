@@ -8,51 +8,80 @@
 
 <div class="modal fade" id="editTransactionModal" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="text-align:left">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Transaction</h4>
+                <h4 class="pageTitle">Edit Transaction</h4>
             </div>
             <div class="modal-body" style="text-align:left">
-                <div>
-                    <label style="padding-right: 107px;">Id</label>
+                <div style="margin-top:10px">
+                    <label class="editTransactionLabel">Id</label>
                     <input type="number" id="transactionIdInput" disabled />
                 </div>
-                <div><span id="validationForDescription" class="text-danger"></span></div>
-                <div style="margin-top: 10px;">
-                    <label style="padding-right: 50px;vertical-align: top;display: inline-block;">Description</label>
+                <div class="editTransactionSpanDiv">
+                    <span id="validationForDescription" class="text-danger"></span>
+                </div>
+                <div>
+                    <label class="editTransactionLabel">Description</label>
                     <textarea id="transactionDescriptionInput" rows="5" cols="40" style="display: inline-block;"></textarea>
                 </div>
-                <div><span id="validationForPaymentType" class="text-danger"></span></div>
-                <div style="margin-top: 10px;">
-                    <label style="padding-right: 33px;">Payment Type</label>
+                <div class="editTransactionSpanDiv">
+                    <span id="validationForPaymentType" class="text-danger"></span>
+                </div>
+                <div>
+                    <label class="editTransactionLabel">Payment Type</label>
                     @{
                         var moneyType = new SelectListItem("Money", "Money");
                         var creditCardType = new SelectListItem("Credit Card", "Credit Card");
                         string moneyTypeVariable = "";
                         List<SelectListItem> items = new() { { moneyType }, { creditCardType } };
                     }
-                    @Html.DropDownListFor(x => moneyTypeVariable, items, null, new { @class="col-3",id="transactionpaymentTypeInput" })
+                    @Html.DropDownListFor(x => moneyTypeVariable, items, null, new { @class="col-3",id="transactionPaymentTypeInput" })
                 </div>
-                <div style="margin-top: 10px;">
-                    <label style="padding-right: 73px;margin-top: 10px;">Amount</label>
+                <div class="editTransactionSpanDiv">
                     <span id="validationForAmount" class="text-danger"></span>
+                </div>
+                <div>
+                    <label class="editTransactionLabel">Amount</label>
                     <input type="text" id="transactionAmountInput" />
                 </div>
-                <div style="margin-top: 10px;">
-                    <label style="padding-right: 14px;">Transaction Date</label>
+                <div style="margin-top:10px">
+                    <label class="editTransactionLabel">Transaction Date</label>
                     <input type="text" id="transactionTimeInput" disabled />
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-primary" id="closeModalButton">Close</button>
-                <button type="button" class="btn-primary" id="saveModalButton">Save</button>
+                <button type="button" class="btn btn-primary" id="closeModalButton">Close</button>
+                <button type="button" class="btn btn-primary" id="saveModalButton">Save</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="deleteTransactionModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Transaction</h4>
+                <p>Do you really wish to delete this transaction?</p>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <ul>
+                    <li id="transactionIdLi"></li>
+                    <li id="transactionDescriptionLi"></li>
+                    <li id="transactionAmountLi"></li>
+                    <li id="transactionPaymentTypeLi"></li>
+                    <li id="transactionTimeLi"></li>
+                </ul>
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Yes, delete it</button>
+                <button type="button" class="btn btn-primary" id="cancelDeleteButton">No, keep it</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <h2>Transaction List</h2>
 
@@ -110,6 +139,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchbuilder/1.3.2/css/searchBuilder.dataTables.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css" />
+<link rel="stylesheet" type="text/css" href="~/css/TransactionListModal.css" />
 }
 
 @section scripts{
@@ -119,174 +149,11 @@
 <script type="text/javascript" src="https://cdn.datatables.net/searchbuilder/1.3.2/js/dataTables.searchBuilder.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js" charset="utf8"></script>
-<script type="text/javascript" src="~/lib/jquery/DateFormatter.js"></script>
+<script type="text/javascript" src="~/js/DateFormatter.js"></script>
+<script type="text/javascript" src="~/js/FieldsValidations.js"></script>
+<script type="text/javascript" src="~/js/TransactionsDataTable.js"></script>
 
 <script>
-
-    $(document).ready(function (){
-        var transactionId = '0';
-        var hasAccessToDeleteCommand = $('#userHasAccessToDeleteCommand').text() == 'true';
-        var hasAccessToEditCommand = $('#userHasAccessToEditCommand').text() == 'true';
-        var rowData;
-        var rowIndex;
-
-        var table = $('#TransactionTable')
-        .DataTable({
-            dom: 'Qlfrtip',
-            searchBuilder: {
-                depthLimit: 1,
-                columns: [2,4],
-                conditions: {
-                    date: {
-                        '!null': null,
-                        'null': null
-                    },
-                    string: {
-                        '!null': null,'null': null,'starts': null,'!starts':null, 'contains':null,
-                        '!contains':null,'ends':null,'!ends':null,'empty':null,'!empty':null,
-                        '!=':{
-                            conditionName: 'Different than'
-                        }
-                    }
-                },
-            },
-            ajax:{
-                url:'/Transaction/GetTransactionList',
-                type:'POST',
-                complete: function(){
-                    setupDeleteButton();
-                    setupEditButton();
-                }
-            },
-            columns:[
-                { data:'id'},
-                { data:'amount'},
-                { data:'paymentType'},
-                { data:'description'},
-                { data:'transactionTime'},
-                {
-                    defaultContent: createDeleteAndEditButtons()
-                }
-            ],
-            columnDefs: [
-                { 'type': 'num', 'targets': 0 },
-                { 'type': 'string', 'targets': 1 },
-                { 'type': 'string', 'targets': 2 },
-                { 'type': 'string', 'targets': 3 },
-                {
-                    type: 'date',
-                    targets: 4,
-                    render:function(data){
-                        return moment(data).format('DD/MM/YYYY HH:MM:SS');
-                    }
-                }
-            ],
-            processing: true,
-            serverSide:true,
-            ordering:true,
-            paging:true,
-            pagingType:'full_numbers',
-            pageLength: 10
-        });
-
-        function createDeleteAndEditButtons() {
-            return ('<input type="button" class="btn btn-danger deleteTransactionButton" value="Delete" disabled/>'
-                    +  '<input type="button" class="btn btn-success editTransactionButton" value="Edit" disabled/> ');
-        }
-
-        setupDeleteButton = function(){
-            if(hasAccessToDeleteCommand){
-                $('.deleteTransactionButton').attr("disabled", false);
-                    $('#TransactionTable tbody').on('click', '.deleteTransactionButton', function (table, transactionId) {
-                    $(this).focusout(function () {
-                        $(this).val('Delete');
-                    });
-                    if ($(this).val() == 'Delete') {
-                        $(this).val('Are you sure?');
-                        transactionId = table.row($(this).parents('tr')).data()['id'];
-                        return;
-                    }
-                    else {
-                        if (transactionId != '0') {
-                            $.ajax({
-                                url: '/Transaction/DeleteTransactionById',
-                                type: 'DELETE',
-                                data: { 'id': transactionId },
-                                success: function () {
-                                    $('#TransactionTable').DataTable().row('.selected').remove().draw(false);
-                                }
-                            });
-                        transactionId = '0';
-                        }
-                    }
-                });
-            }
-        };
-
-        setupEditButton = function(){
-            if(hasAccessToEditCommand){
-                $('.editTransactionButton').attr("disabled", false);
-                $('#TransactionTable tbody').on( 'click', '.editTransactionButton', function () {
-                    $('#editTransactionModal').modal('show');
-                    rowData = table.row( $(this).parents('tr')).data();
-                    rowIndex = table.row( $(this).parents('tr')).index();
-                    $('#transactionIdInput').val(rowData['id']);
-                    $('#transactionDescriptionInput').val(rowData['description']);
-                    $('#transactionpaymentTypeInput').val(rowData['paymentType']);
-                    $('#transactionAmountInput').val(rowData['amount']);
-                    $('#transactionTimeInput').val($.format.date(rowData['transactionTime'], "dd/MM/yyyy HH:mm:ss"));
-                });
-            }
-        };
-
-        setupCloseModalButton = $('#closeModalButton').click(function(){
-            $('#editTransactionModal').modal('hide');
-        });
-
-        setupSaveModalButton = $('#saveModalButton').click(function(){
-            var id = $('#transactionIdInput').val();
-            var description = $('#transactionDescriptionInput').val();
-            var paymentType = $('#transactionpaymentTypeInput').val();
-            var amount = parseFloat($('#transactionAmountInput').val());
-            var transactionTime = rowData['transactionTime'];
-            var isThereInvalidData = false;
-
-            if(paymentType != 'Credit Card' && paymentType != 'Money'){
-                isThereInvalidData = true;
-                $('#validationForPaymentType').text('Invalid Payment Type!');
-            }else{
-                $('#validationForPaymentType').text('');
-            }
-            if (isNaN(amount)){
-                isThereInvalidData = true;
-                $('#validationForAmount').text('Invalid Amount!');
-            }else{
-                $('#validationForAmount').text('');
-            }
-
-            if(isThereInvalidData){ return; }
-
-            $.ajax({
-                url:'/Transaction/UpdateTransactionById',
-                type:'PUT',
-                dataType: 'json; charset=UTF-8',
-                data: ({Id: id, Description:description, PaymentType:paymentType,  Amount:amount, TransactionTime:transactionTime}),
-                success: function(){
-                    rowData['id'] = id;
-                    rowData['description'] = description;
-                    rowData['paymentType'] = paymentType;
-                    rowData['amount'] = amount;
-                    rowData['transactionTime'] = transactionTime;
-
-                    table.row(rowIndex).data(rowData).draw(false);
-                    $('#editTransactionModal').modal('hide');
-                },
-                error:function(data){
-
-                }
-            });
-        });
-    });
-
+    startDataTable();
 </script>
 }

@@ -27,8 +27,8 @@ namespace CashFlowUI.Controllers
         }
 
         [HttpPost]
-        [ActionName("CreateTransactionAsync")]
-        public async Task<ActionResult> CreateTransactionAsync([FromForm] AddTransactionViewModel addTransactionViewModel)
+        [ActionName("CreateTransaction")]
+        public async Task<ActionResult> CreateTransactionAsync([FromBody] AddTransactionViewModel addTransactionViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace CashFlowUI.Controllers
 
         [HttpPut]
         [ActionName("UpdateTransactionById")]
-        public async Task<IActionResult> UpdateTransactionByIdAsync(Transaction transaction)
+        public async Task<IActionResult> UpdateTransactionByIdAsync([FromBody] Transaction transaction)
         {
             await _transactionManager.UpdateTransactionAsync(transaction);
             return NoContent();
