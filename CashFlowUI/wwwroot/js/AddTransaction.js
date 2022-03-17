@@ -4,6 +4,7 @@
             var description = $('#transactionDescription').val();
             var amountAsString = $('#transactionAmount').val().toString();;
             var paymentType = $('#transactionPaymentType').val();
+            var amount = parseFloat(amountAsString);
 
 
             var isAmountInvalid = validateAmount(amountAsString, '#validationForAmount');;
@@ -19,7 +20,17 @@
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({ description, paymentType, amount })
+                data: JSON.stringify({ description, paymentType, amount }),
+                statusCode: {
+                    200: function () {
+                        $('#transactionDescription').val('');
+                        $('#transactionAmount').val('');
+                        $('#transactionStatus').text('Transaction added!');
+                        setTimeout(function () {
+                            $('#transactionStatus').text('');
+                        },2000);                        
+                    }
+                },
             });
         });
     });

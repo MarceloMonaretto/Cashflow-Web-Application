@@ -1,7 +1,7 @@
 ﻿function validateAmount(amountAsString, validationTextAreaId) {
     var amount = parseFloat(amountAsString);
     var isThereInvalidInput = false;
-    var regex = /(^\d+(?:(\.|\,)\d{0,2})$)|(^\d+$)/;
+    var regex = /(^-?\d+(?:(\.|\,)\d{0,2})$)|(^\d+$)/;
 
 
     if (isNaN(amount) || !regex.test(amountAsString)) {

@@ -37,7 +37,7 @@ namespace CashFlowUI.Controllers
 
             await _transactionManager.CreateTransactionAsync(addTransactionViewModel.ToTransactionModel());
 
-            return RedirectToAction("AddTransaction", new { message = "Transaction Created!" });
+            return Ok();
         }
 
         [ActionName("TransactionListPage")]
