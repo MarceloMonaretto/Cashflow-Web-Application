@@ -18,3 +18,8 @@
     width: 100%;
     text-align: right;
 }
+
+#transactionAmount {
+    width: auto;
+    display: inline-block;
+}

@@ -4,25 +4,6 @@ namespace CashFlowUI.Extensions
 {
     public static class TransactionFiltersExtensions
     {
-        public static IEnumerable<Transaction> FilterByPaymentTypeEqualTo(this IEnumerable<Transaction> transactions,
-            string paymentType)
-        {
-            if(paymentType is null)
-            {
-                return transactions;
-            }
-
-            var transactionList = transactions.Where(t => t.PaymentType.ToLower() == paymentType.ToLower());
-            return transactionList;
-        }
-
-        public static IEnumerable<Transaction> FilterByPaymentTypeDifferentThan(this IEnumerable<Transaction> transactions,
-            string paymentType)
-        {
-            return transactions.Where(t => t.PaymentType.ToLower() != paymentType.ToLower());
-        }
-
-
         public static IEnumerable<Transaction> FilterByDateInInterval(this IEnumerable<Transaction> transactions,
             DateTime start, DateTime end)
         {
@@ -31,6 +12,7 @@ namespace CashFlowUI.Extensions
 
             return validTransactions;
         }
+
 
         public static IEnumerable<Transaction> FilterByDateNotInInterval(this IEnumerable<Transaction> transactions,
             DateTime firstDate, DateTime secondDate)
@@ -80,6 +62,24 @@ namespace CashFlowUI.Extensions
         public static DateTime ToYearMonthDayFormat(this DateTime date)
         {
             return new DateTime(date.Year, date.Month, date.Day);
+        }
+
+        public static IEnumerable<Transaction> FilterByPaymentTypeEqualTo(this IEnumerable<Transaction> transactions,
+            string paymentType)
+        {
+            var validTransactions = transactions?
+                .Where(t => t.PaymentType.ToLower() == paymentType.ToLower());
+
+            return validTransactions;
+        }
+
+        public static IEnumerable<Transaction> FilterByPaymentTypeDifferentThan(this IEnumerable<Transaction> transactions,
+            string paymentType)
+        {
+            var validTransactions = transactions?
+                .Where(t => t.PaymentType.ToLower() != paymentType.ToLower());
+
+            return validTransactions;
         }
     }
 }

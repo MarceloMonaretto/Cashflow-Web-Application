@@ -15,7 +15,12 @@
         <span class="addTransactionSpan" id="validationForAmount"></span>
         <div>
             @Html.LabelFor(m => m.Amount, new {@class = "addTransactionLabel"})
-            @Html.TextBoxFor(m => m.Amount, new {@class="", placeholder="Transaction amount", id="transactionAmount", style="display:inline-block;width:auto"})
+            
+            <input type="number" class="form-control" id="transactionAmount" placeholder="Transaction amount" step="0.01">
+            <div class="invalid-feedback">
+                O valor não pode ser negativo.
+            </div>
+
         </div>
 
         <span class="addTransactionSpan" id="validationForPaymentType"></span>

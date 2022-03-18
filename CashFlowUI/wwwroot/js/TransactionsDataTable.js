@@ -15,7 +15,10 @@
                     conditions: {
                         date: {
                             '!null': null,
-                            'null': null
+                            'null': null,
+                            '!=': {
+                                conditionName: 'Different than'
+                            }
                         },
                         string: {
                             '!null': null, 'null': null, 'starts': null, '!starts': null, 'contains': null,
