@@ -9,8 +9,8 @@ namespace CashFlowUI.Factories
         {
             return new SummaryTransactionViewModel()
             {
-                TotalToday = sumOfTodayTransactions,
-                TotalThisMonth = sumOfLastMonthTransactions
+                TotalToday = Math.Round(sumOfTodayTransactions,2,MidpointRounding.ToZero),
+                TotalThisMonth = Math.Round(sumOfLastMonthTransactions, 2, MidpointRounding.ToZero)
             };
         }
     }

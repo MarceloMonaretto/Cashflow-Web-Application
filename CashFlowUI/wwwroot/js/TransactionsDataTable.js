@@ -53,7 +53,7 @@
                         type: 'date',
                         targets: 4,
                         render: function (data) {
-                            return moment(data).format('DD/MM/YYYY HH:MM:SS');
+                                return moment(data).format('MM/DD/YYYY -- hh:hh:ss A');
                         }
                     }
                 ],
