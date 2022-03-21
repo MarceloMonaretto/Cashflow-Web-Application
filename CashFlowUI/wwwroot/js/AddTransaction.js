@@ -2,7 +2,7 @@
     $(document).ready(function () {
         $('#createTransactionButton').click(function () {
             var description = $('#transactionDescription').val();
-            var amountAsString = $('#transactionAmount').val().toString();;
+            var amountAsString = $('#transactionAmount').val().toString();
             var paymentType = $('#transactionPaymentType').val();
             var amount = parseFloat(amountAsString);
 

@@ -35,7 +35,7 @@
                         var moneyType = new SelectListItem("Money", "Money");
                         var creditCardType = new SelectListItem("Credit Card", "Credit Card");
                         string moneyTypeVariable = "";
-                        List<SelectListItem> items = new() { { moneyType }, { creditCardType } };
+                        List<SelectListItem> items = new() { { defaultType }, { moneyType }, { creditCardType } };
                     }
                     @Html.DropDownListFor(x => moneyTypeVariable, items, null, new { @class="col-3",id="transactionPaymentTypeInput" })
                 </div>
@@ -69,7 +69,6 @@
             </div>
             <div class="modal-body" style="text-align:left">
                 <ul>
-                    <li id="transactionIdLi"></li>
                     <li id="transactionDescriptionLi"></li>
                     <li id="transactionAmountLi"></li>
                     <li id="transactionPaymentTypeLi"></li>

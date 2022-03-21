@@ -27,10 +27,11 @@
         <div>
             @Html.LabelFor(m => m.PaymentType, new {@class = "addTransactionLabel"})
             @{
+                var defaultType = new SelectListItem("Select Type", "Select Type");
                 var moneyType = new SelectListItem("Money", "Money");
                 var creditCardType = new SelectListItem("Credit Card", "Credit Card");
 
-                List<SelectListItem> items = new() { { moneyType }, { creditCardType } };
+                List<SelectListItem> items = new() { { defaultType }, { moneyType }, { creditCardType } };
             }
             @Html.DropDownListFor(x => x.PaymentType , items, null, new { @class="col-3",id="transactionPaymentType",style="display: inline-block;width:auto" })
         </div>

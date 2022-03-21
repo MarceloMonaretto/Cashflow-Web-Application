@@ -16,18 +16,6 @@
 
     return isThereInvalidInput;
 }
-    
-
-function validateAmount2(amountAsString, validationTextAreaId) {
-    var amount = parseFloat(amountAsString);
-    var isThereInvalidInput = false;
-    console.log('string:' + amountAsString);
-    var value = parseFloat(amountAsString.replace(/,/g, ''))
-
-    console.log('value:' + value);
-
-    return isThereInvalidInput;
-}
 
 function validateDescription(description, validationTextAreaId) {
     var isThereInvalidInput = false;

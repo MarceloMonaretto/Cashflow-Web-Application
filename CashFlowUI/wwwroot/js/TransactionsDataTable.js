@@ -83,7 +83,6 @@
                     rowData = table.row($(this).parents('tr')).data();
                     rowIndex = table.row($(this).parents('tr')).index();
                     transactionId = rowData['id'];
-                    $('#transactionIdLi').text('Id: ' + rowData['id']);
                     $('#transactionDescriptionLi').text('Description: ' + rowData['description']);
                     $('#transactionPaymentTypeLi').text('Payment Type: ' + rowData['paymentType']);
                     $('#transactionAmountLi').text('Amount: ' + rowData['amount']);
@@ -128,7 +127,6 @@
         deleteModalCancelDeletionEvent = $('#cancelDeleteButton').click(function () {
             $('#deleteTransactionModal').modal('hide');
             transactionId = '0';
-            $('#transactionIdLi').text('');
             $('#transactionDescriptionLi').text('');
             $('#transactionPaymentTypeLi').text('');
             $('#transactionAmountLi').text('');
