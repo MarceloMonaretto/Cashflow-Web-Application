@@ -38,7 +38,6 @@
                     }
                 },
                 columns: [
-                    { data: 'id' },
                     { data: 'amount' },
                     { data: 'paymentType' },
                     { data: 'description' },
@@ -48,13 +47,12 @@
                     }
                 ],
                 columnDefs: [
-                    { 'type': 'num', 'targets': 0 },
+                    { 'type': 'string', 'targets': 0 },
                     { 'type': 'string', 'targets': 1 },
                     { 'type': 'string', 'targets': 2 },
-                    { 'type': 'string', 'targets': 3 },
                     {
                         type: 'date',
-                        targets: 4,
+                        targets: 3,
                         render: function (data) {
                                 return moment(data).format('MM/DD/YYYY -- hh:hh:ss A');
                         }

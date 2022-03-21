@@ -13,10 +13,6 @@
                 <h4 class="pageTitle">Edit Transaction</h4>
             </div>
             <div class="modal-body" style="text-align:left">
-                <div style="margin-top:10px">
-                    <label class="editTransactionLabel">Id</label>
-                    <input type="number" id="transactionIdInput" disabled />
-                </div>
                 <div class="editTransactionSpanDiv">
                     <span id="validationForDescription" class="text-danger"></span>
                 </div>
@@ -67,7 +63,6 @@
             </div>
             <div class="modal-body" style="text-align:left">
                 <ul>
-                    <li id="transactionIdLi"></li>
                     <li id="transactionDescriptionLi"></li>
                     <li id="transactionAmountLi"></li>
                     <li id="transactionPaymentTypeLi"></li>
@@ -115,7 +110,6 @@
 <table id="TransactionTable" class="table table-bordered table-striped table-hover table-responsive" style="width:100%">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Amount</th>
             <th>Payment Type</th>
             <th>Description</th>
@@ -125,7 +119,6 @@
     </thead>
     <tfoot>
         <tr>
-            <th>Id</th>
             <th>Amount</th>
             <th>Payment Type</th>
             <th>Description</th>
