@@ -48,10 +48,10 @@
                     }
                 ],
                 columnDefs: [
-                    { 'type': 'num', 'targets': 0 },
-                    { 'type': 'string', 'targets': 1 },
-                    { 'type': 'string', 'targets': 2 },
-                    { 'type': 'string', 'targets': 3 },
+                    { type: 'num', targets: 0, visible:false },
+                    { type: 'string', targets: 1 },
+                    { type: 'string', targets: 2 },
+                    { type: 'string', targets: 3 },
                     {
                         type: 'date',
                         targets: 4,
@@ -69,13 +69,15 @@
             });
 
         function createDeleteAndEditButtons() {
-            return ('<button type="button" class="btn btn-danger deleteTransactionButton" value="Delete" disabled><i class="bi bi-trash"></i></button>/'
-                + '<button type="button" class="btn btn-success editTransactionButton" value="Edit" disabled><i class="bi bi-pencil-square"></i></button>');
+            return ('<button type="button" class="btn btn-danger deleteTransactionButton" value="Delete" style="display:none"><i class="bi bi-trash"></i></button>/'
+                + '<button type="button" class="btn btn-success editTransactionButton" value="Edit" style="display:none"><i class="bi bi-pencil-square"></i></button>');
         }
 
         function setupDeleteButton() {
             if (hasAccessToDeleteCommand) {
-                $('.deleteTransactionButton').attr("disabled", false);
+                $('.deleteTransactionButton').show();
+
+
                 $('#TransactionTable tbody').on('click', '.deleteTransactionButton', function () {
                     $('#deleteTransactionModal').modal('show');
                     rowData = table.row($(this).parents('tr')).data();
@@ -92,7 +94,9 @@
 
         function setupEditButton() {
             if (hasAccessToEditCommand) {
-                $('.editTransactionButton').attr("disabled", false);
+                $('.editTransactionButton').show();
+
+
                 $('#TransactionTable tbody').on('click', '.editTransactionButton', function () {
                     $('#editTransactionModal').modal('show');
                     rowData = table.row($(this).parents('tr')).data();

@@ -1,7 +1,7 @@
 ﻿function validateAmount(amountAsString, validationTextAreaId) {
     var amount = parseFloat(amountAsString);
     var isThereInvalidInput = false;
-    var regex = /(^-?\d+(?:(\.|\,)\d{0,2})$)|(^\d+$)/;
+    var regex = /(^-?\d+(?:(\.|\,)?\d{0,2})$)|(^\d+$)/;
 
 
     if (isNaN(amount) || !regex.test(amountAsString)) {
@@ -13,6 +13,18 @@
     } else {
         $(validationTextAreaId).text('');
     }
+
+    return isThereInvalidInput;
+}
+    
+
+function validateAmount2(amountAsString, validationTextAreaId) {
+    var amount = parseFloat(amountAsString);
+    var isThereInvalidInput = false;
+    console.log('string:' + amountAsString);
+    var value = parseFloat(amountAsString.replace(/,/g, ''))
+
+    console.log('value:' + value);
 
     return isThereInvalidInput;
 }

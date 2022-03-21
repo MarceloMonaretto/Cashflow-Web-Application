@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLib.ContextRepositoryClasses;
+using CommandAndMenusLib;
 
 namespace CashFlowUI.Controllers
 {
@@ -13,11 +14,14 @@ namespace CashFlowUI.Controllers
     {
         private readonly ITransactionManager _transactionManager;
         private readonly ITransactionsTableManager _transactionsTableManager;
+        private readonly IRolesManager _rolesManager;
 
-        public TransactionController(ITransactionManager transactionManager, ITransactionsTableManager transactionsTableManager)
+        public TransactionController(ITransactionManager transactionManager, 
+            ITransactionsTableManager transactionsTableManager, IRolesManager rolesManager)
         {
             _transactionManager = transactionManager;
             _transactionsTableManager = transactionsTableManager;
+            _rolesManager = rolesManager;
         }
         // GET: AddTransactionController
         public ActionResult AddTransaction(string message = null)
@@ -30,6 +34,11 @@ namespace CashFlowUI.Controllers
         [ActionName("CreateTransaction")]
         public async Task<ActionResult> CreateTransactionAsync([FromBody] AddTransactionViewModel addTransactionViewModel)
         {
+            if (!await UserHasAccessToCommandAsync(CommandsNames.CreateTransactionCommand))
+            {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("AddTransaction", addTransactionViewModel);
@@ -50,6 +59,11 @@ namespace CashFlowUI.Controllers
         [ActionName("DeleteTransactionById")]
         public async Task<IActionResult> DeleteTransactionByIdAsync(int id)
         {
+            if (!await UserHasAccessToCommandAsync(CommandsNames.DeleteTransactionCommand))
+            {
+                return BadRequest();
+            }
+
             await _transactionManager.DeleteTransactionAsync(id);
             return NoContent();
         }
@@ -58,6 +72,11 @@ namespace CashFlowUI.Controllers
         [ActionName("UpdateTransactionById")]
         public async Task<IActionResult> UpdateTransactionByIdAsync([FromBody] Transaction transaction)
         {
+            if (!await UserHasAccessToCommandAsync(CommandsNames.EditTransactionCommand))
+            {
+                return BadRequest();
+            }
+
             await _transactionManager.UpdateTransactionAsync(transaction);
             return NoContent();
         }
@@ -97,6 +116,12 @@ namespace CashFlowUI.Controllers
                 filteredTransactionList, formDraw, totalRecords);
 
             return Json(response);
+        }
+
+        private async Task<bool> UserHasAccessToCommandAsync(string commandName)
+        {
+            var userRole = _rolesManager.GetUserRoleFromClaims();
+            return await _rolesManager.VerifyRoleCommandPermissionAsync(userRole, commandName);
         }
     }
 }
