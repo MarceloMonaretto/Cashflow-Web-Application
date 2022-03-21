@@ -1,4 +1,5 @@
 ﻿@using CashFlowUI.Helpers
+@using CommandAndMenusLib
 
 @inject IRolesManager rolesManager
 @{
@@ -14,8 +15,8 @@
             </div>
             <div class="modal-body" style="text-align:left">
                 <div style="margin-top:10px">
-                    <label class="editTransactionLabel">Id</label>
-                    <input type="number" id="transactionIdInput" disabled />
+                    <label class="editTransactionLabel" style="display:none">Id</label>
+                    <input type="number" id="transactionIdInput" style="display:none" />
                 </div>
                 <div class="editTransactionSpanDiv">
                     <span id="validationForDescription" class="text-danger"></span>
@@ -30,6 +31,7 @@
                 <div>
                     <label class="editTransactionLabel">Payment Type</label>
                     @{
+                        var defaultType = new SelectListItem("Select Type", "Select Type");
                         var moneyType = new SelectListItem("Money", "Money");
                         var creditCardType = new SelectListItem("Credit Card", "Credit Card");
                         string moneyTypeVariable = "";
@@ -42,7 +44,7 @@
                 </div>
                 <div>
                     <label class="editTransactionLabel">Amount</label>
-                    <input type="text" id="transactionAmountInput" />
+                    <input type="number" id="transactionAmountInput" pattern="(^-?\d+(?:\.?\d{0,2})$)|(^\d+$)"/>
                 </div>
                 <div style="margin-top:10px">
                     <label class="editTransactionLabel">Transaction Date</label>
@@ -88,7 +90,7 @@
 @if (User.Identity.IsAuthenticated)
 {
     var userRole = rolesManager.GetUserRoleFromClaims();
-    @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, "DeleteTransactionCommand"))
+    @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, CommandsNames.DeleteTransactionCommand))
     {
         <label id="userHasAccessToDeleteCommand" style="display:none">true</label>
     }
@@ -97,7 +99,7 @@
         <label id="userHasAccessToDeleteCommand" style="display:none">false</label>
     }
 
-    @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, "EditTransactionCommand"))
+    @if (await rolesManager.VerifyRoleCommandPermissionAsync(userRole, CommandsNames.EditTransactionCommand))
     {
         <label id="userHasAccessToEditCommand" style="display:none">true</label>
     }
@@ -152,6 +154,7 @@
 <script type="text/javascript" src="~/js/DateFormatter.js"></script>
 <script type="text/javascript" src="~/js/FieldsValidations.js"></script>
 <script type="text/javascript" src="~/js/TransactionsDataTable.js"></script>
+<script type="text/javascript" src="~/js/jquery.inputmask.js"></script>
 
 <script>
     startDataTable();
