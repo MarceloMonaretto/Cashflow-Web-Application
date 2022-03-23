@@ -1,8 +1,9 @@
-﻿using CashFlowUI.Factories;
+﻿using CashFlowUI.Extensions;
+using CashFlowUI.Factories;
 using CashFlowUI.HttpClients;
 using CashFlowUI.Models;
+using Microsoft.Extensions.Primitives;
 using ModelsLib.ContextRepositoryClasses;
-using System.Linq;
 
 namespace CashFlowUI.Helpers
 {
@@ -15,10 +16,9 @@ namespace CashFlowUI.Helpers
         public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync() =>
             await _transactionClient.GetAllTransactionsAsync();
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsInInterval(DateTime start, DateTime end)
+        public IEnumerable<Transaction> FilterTransactionsByInterval(IEnumerable<Transaction> transactions,
+            DateTime start, DateTime end)
         {
-            var transactions = await GetAllTransactionsAsync();
-
             var validTransactions = transactions?
                 .Where(t => DateTime.Compare(t.TransactionTime, start) >= 0 && DateTime.Compare(t.TransactionTime, end) <= 0);
 
@@ -33,13 +33,29 @@ namespace CashFlowUI.Helpers
             var aMonthAgo = now.AddDays(-30);
             var today = new DateTime(now.Year, now.Month, now.Day);
 
-            var transactionsOfToday = await GetTransactionsInInterval(today, now);
-            var sumOfTodayTransactions = GetSumOfAllAmounts(transactionsOfToday);
-            var transactionsOfLastMonth = await GetTransactionsInInterval(aMonthAgo, now);
-            var sumOfLastMonthTransactions = GetSumOfAllAmounts(transactionsOfLastMonth);
+            var transactions = await _transactionClient.GetAllTransactionsAsync();
+            var transactionsOfToday = transactions.FilterByDateInInterval(today, now);
+            var sumOfTodaysTransactions = GetSumOfAllAmounts(transactionsOfToday);
+            var transactionsOfLastMonth = transactions.FilterByDateInInterval(aMonthAgo, now);
+            var sumOfLastMonthsTransactions = GetSumOfAllAmounts(transactionsOfLastMonth);
 
             return TransactionModelsFactory.CreateSummaryTransactionViewModel(
-                sumOfTodayTransactions, sumOfLastMonthTransactions);
+                sumOfTodaysTransactions, sumOfLastMonthsTransactions);
+        }
+
+        public async Task CreateTransactionAsync(Transaction transaction)
+        {
+            await _transactionClient.CreateTransactionAsync(transaction);
+        }
+
+        public async Task DeleteTransactionAsync(int id)
+        {
+            await _transactionClient.DeleteTransactionAsync(id);
+        }
+
+        public async Task UpdateTransactionAsync(Transaction transaction)
+        {
+            await _transactionClient.UpdateTransactionAsync(transaction);
         }
     }
 }

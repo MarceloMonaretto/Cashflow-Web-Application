@@ -19,8 +19,8 @@ namespace CashFlowUI.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var transactionsSummaryiewModel = await _transactionManager.GetSummaryOfTransactionsAsync();
-            return View("Index", transactionsSummaryiewModel);
+            var transactionsSummaryViewModel = await _transactionManager.GetSummaryOfTransactionsAsync();
+            return View("Index", transactionsSummaryViewModel);
         }
 
         public IActionResult Privacy()

@@ -1,4 +1,5 @@
 ﻿using CashFlowUI.Models;
+using Microsoft.Extensions.Primitives;
 using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.Helpers
@@ -7,7 +8,9 @@ namespace CashFlowUI.Helpers
     {
         Task<IEnumerable<Transaction>> GetAllTransactionsAsync();
         double GetSumOfAllAmounts(IEnumerable<Transaction> transactions);
-        Task<IEnumerable<Transaction>> GetTransactionsInInterval(DateTime start, DateTime end);
         Task<SummaryTransactionViewModel> GetSummaryOfTransactionsAsync();
+        Task CreateTransactionAsync(Transaction transaction);
+        Task DeleteTransactionAsync(int id);
+        Task UpdateTransactionAsync(Transaction transaction);
     }
 }

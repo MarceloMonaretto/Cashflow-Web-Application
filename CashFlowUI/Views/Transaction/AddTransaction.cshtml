@@ -1,0 +1,53 @@
+﻿@model AddTransactionViewModel
+
+<div class="container border" id="addTransactionContainer" style="width:55%">
+    <div class="row">
+        <h3 class="pageTitle">Create a new transaction</h3>
+    </div>
+    <span id="transactionStatus" style="color:green"></span>
+    <div class="row" style="text-align:left">
+        <span style="color:green">@ViewData["AddTransaction_TransactionCreatedMessage"]</span>
+        <span class="addTransactionSpan" id="validationForDescription"></span>
+        <div>
+            @Html.LabelFor(m => m.Description, new {@class = "addTransactionLabel"})
+            <textarea id="transactionDescription" asp-for="Description" placeholder="Transaction description" style="display:inline-block;width:78%"></textarea>
+        </div>
+        <span class="addTransactionSpan" id="validationForAmount"></span>
+        <div>
+            @Html.LabelFor(m => m.Amount, new {@class = "addTransactionLabel"})
+            
+            <input type="number" class="form-control" id="transactionAmount" placeholder="Transaction amount" step="0.01">
+            <div class="invalid-feedback">
+                O valor não pode ser negativo.
+            </div>
+
+        </div>
+
+        <span class="addTransactionSpan" id="validationForPaymentType"></span>
+        <div>
+            @Html.LabelFor(m => m.PaymentType, new {@class = "addTransactionLabel"})
+            @{
+                var defaultType = new SelectListItem("Select Type", "Select Type");
+                var moneyType = new SelectListItem("Money", "Money");
+                var creditCardType = new SelectListItem("Credit Card", "Credit Card");
+
+                List<SelectListItem> items = new() { { defaultType }, { moneyType }, { creditCardType } };
+            }
+            @Html.DropDownListFor(x => x.PaymentType , items, null, new { @class="col-3",id="transactionPaymentType",style="display: inline-block;width:auto" })
+        </div>
+        <button id="createTransactionButton" class="btn btn-success" style="margin-right:20px;width:auto">Create!</button>
+    </div>
+</div>
+
+@section styles{
+<link rel="stylesheet" type="text/css" href="~/css/AddTransactionPage.css" />
+}
+
+@section scripts{
+<script type="text/javascript" src="~/js/FieldsValidations.js"></script>
+<script type="text/javascript" src="~/js/AddTransaction.js"></script>
+
+<script>
+    setupTransactionCreationEvent();
+</script>
+}

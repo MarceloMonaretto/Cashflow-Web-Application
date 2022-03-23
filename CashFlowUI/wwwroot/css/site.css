@@ -1,86 +1,80 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .container {
-    width: 500px;
+    width: auto;
     margin: 0 auto;
+    text-align: center;
 }
 
-.loginTitle {
-    margin: 30px 30px auto;
+.pageTitle {
+    margin: 15px auto;
+    width: 100%;
     text-transform: uppercase;
-}
-
-#loginErrorMessage{
-    color: red;
-}
-
-#userLabel{
-    margin: 50px 7px auto;
-}
-
-#loginButton{
-    margin-bottom: 10px;
+    text-align: center;
 }
 
 .loginButtonHeader {
-    margin-right: 40px;
-    background-color: red;
-    color: white;
-    padding: 1em 1.5em;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius:10px;
-    border-style:solid;
-    border-color: red;
-}
-
-.loginButtonHeader:hover{
-    color: black;
-    font-size:20px;
-}
-
-.logoutButtonHeader {
-    margin-right: 40px;
     background-color: dodgerblue;
     color: white;
-    padding: 1em 1.5em;
-    text-decoration: none;
-    text-transform: uppercase;
-    border-radius: 10px;
-    border-style: solid;
+    font-size: 16px;
+    border: solid;
     border-color: dodgerblue;
+    border-radius: 5px;
+    padding: 4px;
+    text-align: center;
+    vertical-align: central;
+    text-decoration: none;
 }
+
+    .loginButtonHeader:hover {
+        padding: 12px;
+        font-size: 20px;
+        color: white;
+    }
+
+.logoutButtonHeader {
+    background-color: orange;
+    color: white;
+    font-size: 16px;
+    border: solid;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 4px;
+    text-align: center;
+    vertical-align: central;
+    text-decoration: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 
 .logoutButtonHeader:hover {
-    color: black;
+    padding: 12px;
     font-size: 20px;
-}
-
-
-.formField {
-    border-style: hidden;
-    margin-top: 20px;
-}
-
-#rememberMeButton {
-    border-style: hidden;
-    margin-top: 20px;
-    margin-left: 189px;
+    color: white;
 }

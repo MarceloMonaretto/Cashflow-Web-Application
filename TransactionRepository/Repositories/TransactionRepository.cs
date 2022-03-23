@@ -66,6 +66,7 @@ namespace TransactionRepositoryLib.Data
             transaction.Description = updatedTransaction.Description;
             transaction.PaymentType = updatedTransaction.PaymentType;
             transaction.TransactionTime = updatedTransaction.TransactionTime;
+            transaction.Amount = updatedTransaction.Amount;
 
             return SaveChanges();
         }

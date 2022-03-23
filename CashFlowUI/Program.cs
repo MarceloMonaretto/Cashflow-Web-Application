@@ -33,6 +33,7 @@ builder.Services.AddScoped<ILoginManager, LoginManager>();
 builder.Services.AddScoped<IRolesManager, RolesManager>();
 builder.Services.AddScoped<IAccountManager, AccountManager>();
 builder.Services.AddScoped<ITransactionManager, TransactionManager>();
+builder.Services.AddScoped<ITransactionsTableManager, TransactionsTableManager>();
 
 builder.Services.AddHttpContextAccessor();
 
