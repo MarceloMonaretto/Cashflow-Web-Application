@@ -18,32 +18,47 @@ namespace CashFlowUI.Helpers
 
         public async Task<bool> VerifyRoleMenuPermissionAsync(string roleName, string menuName)
         {
-            var role = (await _roleClient.GetAllRolesAsync()).FirstOrDefault(r => r.RoleName == roleName);
-            if (role == null)
+            try
+            {
+                var role = (await _roleClient.GetAllRolesAsync()).FirstOrDefault(r => r.RoleName == roleName);
+                if (role == null)
+                {
+                    return false;
+                }
+
+                bool hasPermission = role.MenuAccessPermissions
+                    .ConvertToListOfStrings()
+                    .Any(menuPermission => menuPermission == menuName);
+
+                return hasPermission;
+            }
+            catch
             {
                 return false;
-            }
-
-            bool hasPermission = role.MenuAccessPermissions
-                .ConvertToListOfStrings()
-                .Any(menuPermission => menuPermission == menuName);
-
-            return hasPermission;
+            }           
         }
 
         public async Task<bool> VerifyRoleCommandPermissionAsync(string roleName, string commandName)
         {
-            var role = (await _roleClient.GetAllRolesAsync()).FirstOrDefault(r => r.RoleName == roleName);
-            if (role == null)
+
+            try
+            {
+                var role = (await _roleClient.GetAllRolesAsync()).FirstOrDefault(r => r.RoleName == roleName);
+                if (role == null)
+                {
+                    return false;
+                }
+
+                bool hasPermission = role.CommandAccessPermissions
+                    .ConvertToListOfStrings()
+                    .Any(commandPermission => commandPermission == commandName);
+
+                return hasPermission;
+            }
+            catch
             {
                 return false;
             }
-
-            bool hasPermission = role.CommandAccessPermissions
-                .ConvertToListOfStrings()
-                .Any(commandPermission => commandPermission == commandName);
-
-            return hasPermission;
         }
 
         public string GetUserRoleFromClaims()

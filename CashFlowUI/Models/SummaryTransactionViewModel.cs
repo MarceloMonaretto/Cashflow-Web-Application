@@ -9,5 +9,7 @@ namespace CashFlowUI.Models
 
         [DisplayName("Last 30 Days")]
         public double TotalThisMonth { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

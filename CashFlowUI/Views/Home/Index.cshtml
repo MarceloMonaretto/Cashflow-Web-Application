@@ -8,6 +8,7 @@
         <h1 class="display-4">Welcome, <strong>@User.Identity.Name</strong></h1>
     </div>
     <div style="margin-top:60px">
+        <span class="text-danger">@Model.ErrorMessage</span>
         <h2>Total Received</h2>
         <table class="table table-bordered" style="margin-top:30px">
             <thead>

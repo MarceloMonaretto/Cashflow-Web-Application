@@ -35,6 +35,9 @@
                     complete: function () {
                         setupDeleteButton();
                         setupEditButton();
+                    },
+                    error: function () {
+                        $('#transactionListErrorMessage').text("Failed to load data!");
                     }
                 },
                 columns: [
@@ -65,7 +68,10 @@
                 ordering: true,
                 paging: true,
                 pagingType: 'full_numbers',
-                pageLength: 10
+                pageLength: 10,
+                initComplete: function () {
+                    $('#transactionListErrorMessage').text('');
+                }
             });
 
         function createDeleteAndEditButtons() {

@@ -11,10 +11,12 @@ namespace CashFlowUI.Controllers
     public class AccountController : Controller
     {
         private readonly ILoginManager _loginManager;
+        private readonly IErrorLogger _errorLogger;
 
-        public AccountController(ILoginManager loginManager)
+        public AccountController(ILoginManager loginManager, IErrorLogger errorLogger)
         {
             _loginManager = loginManager;
+            _errorLogger = errorLogger;
         }
 
         [AllowAnonymous]
@@ -34,13 +36,21 @@ namespace CashFlowUI.Controllers
         [HttpPost, ActionName("Login")]
         public async Task<IActionResult> Login(LoginViewModel login, string returnUrl)
         {
-            if (!ModelState.IsValid || !(await _loginManager.CanLoginAsync(login.User, login.Password)))
+            try
             {
-                ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
-                return View(login);
+                if (!ModelState.IsValid || !(await _loginManager.CanLoginAsync(login.User, login.Password)))
+                {
+                    ViewBag.LoginErrorMessage = StandardMessages.LoginMessages.InvalidLoginMessage;
+                    return View(login);
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogErrorMessage(ex.Message);
             }
 
             await _loginManager.SignInUserAsync(login.User);
+
             return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Index", "Home");
         }
     }

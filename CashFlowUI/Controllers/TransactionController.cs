@@ -15,13 +15,15 @@ namespace CashFlowUI.Controllers
         private readonly ITransactionManager _transactionManager;
         private readonly ITransactionsTableManager _transactionsTableManager;
         private readonly IRolesManager _rolesManager;
+        private readonly IErrorLogger _errorLogger;
 
-        public TransactionController(ITransactionManager transactionManager, 
-            ITransactionsTableManager transactionsTableManager, IRolesManager rolesManager)
+        public TransactionController(ITransactionManager transactionManager,
+            ITransactionsTableManager transactionsTableManager, IRolesManager rolesManager, IErrorLogger errorLogger)
         {
             _transactionManager = transactionManager;
             _transactionsTableManager = transactionsTableManager;
             _rolesManager = rolesManager;
+            _errorLogger = errorLogger;
         }
 
         public ActionResult AddTransaction(string message = null)
@@ -44,7 +46,15 @@ namespace CashFlowUI.Controllers
                 return View("AddTransaction", addTransactionViewModel);
             }
 
-            await _transactionManager.CreateTransactionAsync(addTransactionViewModel.ToTransactionModel());
+            try
+            {
+                await _transactionManager.CreateTransactionAsync(addTransactionViewModel.ToTransactionModel());
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogErrorMessage(ex.Message);
+            }
+
 
             return Ok();
         }
@@ -64,7 +74,16 @@ namespace CashFlowUI.Controllers
                 return BadRequest();
             }
 
-            await _transactionManager.DeleteTransactionAsync(id);
+            try
+            {
+                await _transactionManager.DeleteTransactionAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogErrorMessage(ex.Message);
+            }
+
+
             return Ok();
         }
 
@@ -77,7 +96,15 @@ namespace CashFlowUI.Controllers
                 return BadRequest();
             }
 
-            await _transactionManager.UpdateTransactionAsync(transaction);
+            try
+            {
+                await _transactionManager.UpdateTransactionAsync(transaction);
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogErrorMessage(ex.Message);
+            }
+
             return Ok();
         }
 
@@ -95,27 +122,35 @@ namespace CashFlowUI.Controllers
             var formDraw = requestFormData["draw"];
             var searchBuilderFilters = requestFormData.Where(d => d.Key.Contains("searchBuilder"));
 
-            var allTransactions = await _transactionManager.GetAllTransactionsAsync();
-            List<Transaction> filteredTransactionList = _transactionsTableManager.FilterTransactions(
+            try
+            {
+                var allTransactions = await _transactionManager.GetAllTransactionsAsync();
+                List<Transaction> filteredTransactionList = _transactionsTableManager.FilterTransactions(
                 allTransactions.ToList(), searchBuilderFilters);
 
-            filteredTransactionList = _transactionsTableManager.SearchForText(filteredTransactionList, searchValue);
-            int totalRecords;
-            bool wasFiltered = !allTransactions.SequenceEqual(filteredTransactionList);
-            if (wasFiltered)
-            {
-                totalRecords = filteredTransactionList.Count;
-            }
-            else
-            {
-                totalRecords = allTransactions.Count();
-            }
-            filteredTransactionList = _transactionsTableManager.MakePagination(filteredTransactionList, start, length);
-            filteredTransactionList = _transactionsTableManager.SortData(filteredTransactionList, columnName, sortDirection);
-            dynamic response = _transactionsTableManager.CreateUpdatedTableConfiguration(allTransactions.ToList(),
-                filteredTransactionList, formDraw, totalRecords);
+                filteredTransactionList = _transactionsTableManager.SearchForText(filteredTransactionList, searchValue);
+                int totalRecords;
+                bool wasFiltered = !allTransactions.SequenceEqual(filteredTransactionList);
+                if (wasFiltered)
+                {
+                    totalRecords = filteredTransactionList.Count;
+                }
+                else
+                {
+                    totalRecords = allTransactions.Count();
+                }
+                filteredTransactionList = _transactionsTableManager.MakePagination(filteredTransactionList, start, length);
+                filteredTransactionList = _transactionsTableManager.SortData(filteredTransactionList, columnName, sortDirection);
+                dynamic response = _transactionsTableManager.CreateUpdatedTableConfiguration(allTransactions.ToList(),
+                    filteredTransactionList, formDraw, totalRecords);
 
-            return Json(response);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogErrorMessage(ex.Message);
+                return NotFound();
+            }            
         }
 
         private async Task<bool> UserHasAccessToCommandAsync(string commandName)
