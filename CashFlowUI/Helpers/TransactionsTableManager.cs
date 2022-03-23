@@ -101,11 +101,11 @@ namespace CashFlowUI.Helpers
             var builderString = $"searchBuilder[criteria][{filterNumber}]";
 
             var condition = filters.FirstOrDefault(f => f.Key.Contains(builderString + "[condition]")).Value.ToString();
-            var date1 = DateTime.Parse(filters.FirstOrDefault(f => f.Key.Contains(builderString + "[value1]")).Value);
+            var date1 = DateOnly.Parse(filters.FirstOrDefault(f => f.Key.Contains(builderString + "[value1]")).Value);
 
             var value2 = filters.FirstOrDefault(f => f.Key.Contains(builderString + "[value2]")).Value;
 
-            if ((condition == "between" || condition == "!between") && DateTime.TryParse(value2, out DateTime date2))
+            if ((condition == "between" || condition == "!between") && DateOnly.TryParse(value2, out DateOnly date2))
             {
                 return FilterByCombinedDateContidions(transactions, date1, date2, condition).ToList();
             }
@@ -115,7 +115,7 @@ namespace CashFlowUI.Helpers
             }
         }
 
-        private static IEnumerable<Transaction> FilterBySingleDateContidions(IEnumerable<Transaction> transactions, DateTime date1, string condition)
+        private static IEnumerable<Transaction> FilterBySingleDateContidions(IEnumerable<Transaction> transactions, DateOnly date1, string condition)
         {
             return condition switch
             {
@@ -127,7 +127,7 @@ namespace CashFlowUI.Helpers
             };
         }
 
-        private static IEnumerable<Transaction> FilterByCombinedDateContidions(IEnumerable<Transaction> transactions, DateTime date1, DateTime date2, string condition)
+        private static IEnumerable<Transaction> FilterByCombinedDateContidions(IEnumerable<Transaction> transactions, DateOnly date1, DateOnly date2, string condition)
         {
             return condition switch
             {
