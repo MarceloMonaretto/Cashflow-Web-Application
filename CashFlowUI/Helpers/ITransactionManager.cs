@@ -12,5 +12,6 @@ namespace CashFlowUI.Helpers
         Task CreateTransactionAsync(Transaction transaction);
         Task DeleteTransactionAsync(int id);
         Task UpdateTransactionAsync(Transaction transaction);
+        Task<(List<double> lastMonthsTotalsPerDay, List<string> lastMonthsDays)> getLastMonthsTotalsPerDayAsync();
     }
 }

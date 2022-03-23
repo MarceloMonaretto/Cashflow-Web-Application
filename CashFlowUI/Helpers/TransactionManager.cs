@@ -57,5 +57,38 @@ namespace CashFlowUI.Helpers
         {
             await _transactionClient.UpdateTransactionAsync(transaction);
         }
+
+        public async Task<(List<double> lastMonthsTotalsPerDay, List<string> lastMonthsDays)> getLastMonthsTotalsPerDayAsync()
+        {
+            var transactions = await GetAllTransactionsAsync();
+            var periodDateTimeBegin = DateTime.Now.AddDays(-30);
+            var thisDay = DateOnly.FromDateTime(periodDateTimeBegin);
+            List<string> lastMonthsDates = new();
+            transactions = transactions.FilterByDateLaterThan(periodDateTimeBegin).OrderBy(t => t.TransactionTime);
+
+            List<double> lastMonthsTotalsPerDay = new();
+
+            var transactionsTimes = transactions
+                .Select(t => t.TransactionTime);
+
+            for (var i = 0; i <= 30; i++)
+            {
+                var thisDaysSum = 0d;
+                foreach (var transaction in transactions)
+                {
+                    var transactionDate = DateOnly.FromDateTime(transaction.TransactionTime);
+                    if (transactionDate == thisDay)
+                    {
+                        thisDaysSum += transaction.Amount;
+                    }
+                }
+
+                lastMonthsTotalsPerDay.Add(thisDaysSum);
+                lastMonthsDates.Add($"{thisDay.Month}/{thisDay.Day}");
+                thisDay = thisDay.AddDays(1);
+            }
+
+            return (lastMonthsTotalsPerDay, lastMonthsDates);
+        }
     }
 }

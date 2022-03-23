@@ -3,6 +3,8 @@ using CashFlowUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CashFlowUI.Extensions;
+using ModelsLib.ContextRepositoryClasses;
 
 namespace CashFlowUI.Controllers
 {
@@ -21,6 +23,15 @@ namespace CashFlowUI.Controllers
         {
             var transactionsSummaryViewModel = await _transactionManager.GetSummaryOfTransactionsAsync();
             return View("Index", transactionsSummaryViewModel);
+        }
+
+        [ActionName("GetLastThirtyDaysValues")]
+        public async Task<IActionResult> GetLastThirtyDaysValuesAsync()
+        {
+
+            (List<double> lastMonthsTotalsPerDay, List<string> lastMonthsDays) = await _transactionManager.getLastMonthsTotalsPerDayAsync();
+
+            return Json(new { amounts = lastMonthsTotalsPerDay, dates = lastMonthsDays });
         }
 
         public IActionResult Privacy()
