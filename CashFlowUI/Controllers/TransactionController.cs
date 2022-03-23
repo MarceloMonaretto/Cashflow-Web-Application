@@ -23,7 +23,7 @@ namespace CashFlowUI.Controllers
             _transactionsTableManager = transactionsTableManager;
             _rolesManager = rolesManager;
         }
-        // GET: AddTransactionController
+
         public ActionResult AddTransaction(string message = null)
         {
             ViewBag.AddTransactionMessage = message;
@@ -65,7 +65,7 @@ namespace CashFlowUI.Controllers
             }
 
             await _transactionManager.DeleteTransactionAsync(id);
-            return NoContent();
+            return Ok();
         }
 
         [HttpPut]
@@ -78,7 +78,7 @@ namespace CashFlowUI.Controllers
             }
 
             await _transactionManager.UpdateTransactionAsync(transaction);
-            return NoContent();
+            return Ok();
         }
 
         [HttpPost]
