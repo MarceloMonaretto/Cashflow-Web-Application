@@ -29,14 +29,13 @@ namespace CashFlowUI.Helpers
 
         public async Task<SummaryTransactionViewModel> GetSummaryOfTransactionsAsync()
         {
-            var now = DateTime.Now;
-            var aMonthAgo = now.AddDays(-30);
-            var today = new DateTime(now.Year, now.Month, now.Day);
+            var today = DateOnly.FromDateTime(DateTime.Now);
+            var aMonthAgo = today.AddDays(-30);            
 
             var transactions = await _transactionClient.GetAllTransactionsAsync();
-            var transactionsOfToday = transactions.FilterByDateInInterval(today, now);
+            var transactionsOfToday = transactions.FilterByDateInInterval(today, today);
             var sumOfTodaysTransactions = GetSumOfAllAmounts(transactionsOfToday);
-            var transactionsOfLastMonth = transactions.FilterByDateInInterval(aMonthAgo, now);
+            var transactionsOfLastMonth = transactions.FilterByDateInInterval(aMonthAgo, today);
             var sumOfLastMonthsTransactions = GetSumOfAllAmounts(transactionsOfLastMonth);
 
             return TransactionModelsFactory.CreateSummaryTransactionViewModel(
@@ -61,8 +60,8 @@ namespace CashFlowUI.Helpers
         public async Task<(List<double> lastMonthsTotalsPerDay, List<string> lastMonthsDays)> getLastMonthsTotalsPerDayAsync()
         {
             var transactions = await GetAllTransactionsAsync();
-            var periodDateTimeBegin = DateTime.Now.AddDays(-30);
-            var thisDay = DateOnly.FromDateTime(periodDateTimeBegin);
+            var periodDateTimeBegin = DateOnly.FromDateTime(DateTime.Now).AddDays(-30);
+            var thisDay = periodDateTimeBegin;
             List<string> lastMonthsDates = new();
             transactions = transactions.FilterByDateLaterThan(periodDateTimeBegin).OrderBy(t => t.TransactionTime);
 

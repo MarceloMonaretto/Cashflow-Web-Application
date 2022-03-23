@@ -1,16 +1,9 @@
 ﻿using ModelsLib.ContextRepositoryClasses;
-using CashFlowUI.Helpers;
-using CashFlowUI.HttpClients;
 using FluentAssertions;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication;
 using CashFlowUI.Extensions;
 
 namespace CashflowUI.Tests
@@ -39,11 +32,11 @@ namespace CashflowUI.Tests
 
             var startDate = _transactionSamples
                 .Skip(expectedFirstTransaction - 1)
-                .FirstOrDefault().TransactionTime;
+                .FirstOrDefault().TransactionTime.ToDateOnly();
 
             var endDate = _transactionSamples.Skip(expectedFirstTransaction - 1)
                 .Take(expectedLastTransaction - expectedFirstTransaction + 1)
-                .LastOrDefault().TransactionTime;
+                .LastOrDefault().TransactionTime.ToDateOnly();
 
             var result = _transactionSamples.FilterByDateInInterval(startDate, endDate);
 
@@ -54,25 +47,13 @@ namespace CashflowUI.Tests
         [Fact]
         public void GetTransactionsInInterval_IntervalHasNoTransaction_ShouldReturnNull()
         {
-            var startDate = new DateTime(5000, 1, 1);
+            var startDate = new DateOnly(5000, 1, 1);
 
-            var endDate = new DateTime(5000, 1, 2);
+            var endDate = new DateOnly(5000, 1, 2);
 
             var result = _transactionSamples.FilterByDateInInterval(startDate, endDate);
 
             result.Should().BeEmpty();
-        }
-
-        private Mock<ITransactionClient> MockTransactionClient()
-        {
-            var transactionClientMock = new Mock<ITransactionClient>();
-            transactionClientMock.Setup(x => x.CreateTransactionAsync(It.IsAny<Transaction>())).Returns(Task.FromResult("Created the transaction!"));
-            transactionClientMock.Setup(x => x.DeleteTransactionAsync(It.IsAny<int>())).Returns(Task.FromResult("Deleted the transaction!"));
-            transactionClientMock.Setup(x => x.UpdateTransactionAsync(It.IsAny<Transaction>())).Returns(Task.FromResult("Updated the transaction!"));
-            transactionClientMock.Setup(x => x.GetTransactionByIdAsync(It.IsAny<int>())).Returns((int id) => Task.FromResult(_transactionSamples.FirstOrDefault(t => t.Id == id)));
-            transactionClientMock.Setup(x => x.GetAllTransactionsAsync()).Returns(Task.FromResult(_transactionSamples));
-
-            return transactionClientMock;
         }
 
         private IEnumerable<Transaction> GenerateTransactionSamples()
