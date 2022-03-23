@@ -8,6 +8,7 @@
         <h1 class="display-4">Welcome, <strong>@User.Identity.Name</strong></h1>
     </div>
     <div style="margin-top:60px">
+        <span class="text-danger">@Model.ErrorMessage</span>
         <h2>Total Received</h2>
         <table class="table table-bordered" style="margin-top:30px">
             <thead>
@@ -24,5 +25,17 @@
             </tbody>
         </table>
     </div>
+    <h3>Transactions History for the Last 30 Days </h3>
+    <div style="width:75%; text-align:center;display:inline-block">
+        <canvas id="transactionChart" width:"400" height:"400" style="width:100%;display:inline-block;margin:auto"></canvas>
+    </div>
 </body>
+
+@section scripts{
+<script type="text/javascript" src="~/lib/jquery/HomePage.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script>
+    createChart();
+</script>
+}
 
