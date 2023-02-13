@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAccountClient, AccountClient>();
 builder.Services.AddScoped<IRoleClient, RoleClient>();
 builder.Services.AddScoped<ITransactionClient, TransactionClient>();
+builder.Services.AddScoped<IPdfClient, PdfClient>();
 
 builder.Services.AddHttpClient<IAccountClient, AccountClient>(client => {
     client.BaseAddress = new System.Uri("http://localhost:5000/cashflowapi/");

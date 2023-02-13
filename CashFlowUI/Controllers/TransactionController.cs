@@ -139,8 +139,8 @@ namespace CashFlowUI.Controllers
                 {
                     totalRecords = allTransactions.Count();
                 }
-                filteredTransactionList = _transactionsTableManager.MakePagination(filteredTransactionList, start, length);
                 filteredTransactionList = _transactionsTableManager.SortData(filteredTransactionList, columnName, sortDirection);
+                filteredTransactionList = _transactionsTableManager.MakePagination(filteredTransactionList, start, length);
                 dynamic response = _transactionsTableManager.CreateUpdatedTableConfiguration(allTransactions.ToList(),
                     filteredTransactionList, formDraw, totalRecords);
 

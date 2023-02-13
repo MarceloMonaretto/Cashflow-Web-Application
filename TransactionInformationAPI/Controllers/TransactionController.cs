@@ -71,6 +71,14 @@ namespace TransactionInformationAPI.Controllers
             var transactions = await _transactionRepositoryConnection.Repository.GetAllTransactionsAsync();
 
             return _autoMapper.Map<IEnumerable<TransactionReadDto>>(transactions);
+        }   
+
+        [HttpGet("getPDF")]
+        public byte[] GetPDF()
+        {
+            return (System.IO.File.ReadAllBytes(@"C:\Users\marcelo.monaretto\Downloads\Modelo CV_Discussão.pdf"));
+             
         }
+
     }
 }

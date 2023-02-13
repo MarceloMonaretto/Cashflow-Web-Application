@@ -21,6 +21,15 @@ builder.Services.AddScoped<AppContextLib.Data.IAppContext, AppContextLib.Data.Ap
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "_myAllowSpecificOrigins",
+                      builder =>
+                      {
+                          builder.WithOrigins("http://localhost:5252");
+                      });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -38,6 +47,8 @@ using (var scope = scopeFactory.CreateScope())
     var service = scope.ServiceProvider.GetService<PopulateDatabaseLib.IDatabasePopulator>();
     await service.PopulateTransitionsAsync();
 }
+
+app.UseCors("_myAllowSpecificOrigins");
 
 app.MapControllers();
 
